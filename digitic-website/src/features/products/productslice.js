@@ -1,0 +1,54 @@
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+import { productService } from "./productService";
+
+export const getAllProducts = createAsyncThunk(
+  "product/get",
+  async (userDate, thunkAPI) => {
+    try {
+      return await productService.getProducts(userDate);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+
+const productState={
+    product:"",
+    isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: "",
+}
+
+export const productSlice = createSlice({
+  name: "product",
+  initialState: productState,
+  reducers: [],
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllProducts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllProducts.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.product= action.payload;
+        
+      })
+      .addCase(getAllProducts.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = action.error;
+      if (state.isError === true) {
+          toast.error(action.error);
+        }
+      })
+     
+  }
+});
+
+export default productSlice.reducer;

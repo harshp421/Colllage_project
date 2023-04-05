@@ -14,11 +14,11 @@ const Signup = () => {
     const dispatch =useDispatch();   
 
   let signupSchema = yup.object({
-    firstname: yup.string().required("First name is required "),
-    lastname: yup.string().required("Last Name is required"),
-    email: yup.string().required("email is required"),
-    mobile: yup.string().required("mobile number is required"),
-    password: yup.string().required("Password is required "),
+    firstname: yup.string().required("**First name is required "),
+    lastname: yup.string().required("**Last Name is required"),
+    email: yup.string().required("**email is required"),
+    mobile: yup.string().required("**mobile number is required"),
+    password: yup.string().required("**Password is required "),
   });
 
   const formik = useFormik({

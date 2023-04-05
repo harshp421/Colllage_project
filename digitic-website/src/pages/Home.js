@@ -5,6 +5,11 @@ import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
+import service01 from '../images/service.png'
+import service02 from '../images/service-02.png'
+import service03 from '../images/service-03.png'
+import service04 from '../images/service-04.png'
+import service05 from '../images/service-05.png'
 
 
 const Home = () => {
@@ -20,9 +25,9 @@ const Home = () => {
                 alt="main banner"
               />
               <div className="main-banner-content position-absolute">
-                <h4>SUPERCHARGED FOR PROS.</h4>
-                <h5>iPad S13+ Pro.</h5>
-                <p>From $999.00 or $41.62/mo.</p>
+                <h4>SUPERstyliest FOR PROS.</h4>
+                <h5>Woman's Tshirt</h5>
+                <p>From 400 or 1500.</p>
                 <Link className="button">BUY NOW</Link>
               </div>
             </div>
@@ -36,11 +41,9 @@ const Home = () => {
                   alt="main banner"
                 />
                 <div className="small-banner-content position-absolute">
-                  <h4>Best Sake</h4>
-                  <h5>iPad S13+ Pro.</h5>
-                  <p>
-                    From $999.00 <br /> or $41.62/mo.
-                  </p>
+                <h4>SUPERstyliest FOR PROS.</h4>
+                <h5>Woman's Tshirt</h5>
+                <p>From 400 or 1500.</p>
                 </div>
               </div>
               <div className="small-banner position-relative">
@@ -50,11 +53,9 @@ const Home = () => {
                   alt="main banner"
                 />
                 <div className="small-banner-content position-absolute">
-                  <h4>NEW ARRIVAL</h4>
-                  <h5>But IPad Air</h5>
-                  <p>
-                    From $999.00 <br /> or $41.62/mo.
-                  </p>
+                <h4>SUPERstyliest FOR PROS.</h4>
+                <h5>Woman's Tshirt</h5>
+                <p>From 400 or 1500.</p>
                 </div>
               </div>
               <div className="small-banner position-relative ">
@@ -64,11 +65,9 @@ const Home = () => {
                   alt="main banner"
                 />
                 <div className="small-banner-content position-absolute">
-                  <h4>NEW ARRIVAL</h4>
-                  <h5>But IPad Air</h5>
-                  <p>
-                    From $999.00 <br /> or $41.62/mo.
-                  </p>
+                <h4>SUPERstyliest FOR PROS.</h4>
+                <h5>Woman's Tshirt</h5>
+                <p>From 400 or 1500.</p>
                 </div>
               </div>
               <div className="small-banner position-relative ">
@@ -78,17 +77,64 @@ const Home = () => {
                   alt="main banner"
                 />
                 <div className="small-banner-content position-absolute">
-                  <h4>NEW ARRIVAL</h4>
-                  <h5>But IPad Air</h5>
-                  <p>
-                    From $999.00 <br /> or $41.62/mo.
-                  </p>
+                <h4>SUPERstyliest FOR PROS.</h4>
+                <h5>Woman's Tshirt</h5>
+                <p>From 400 or 1500.</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Container>
+
+      <section className='home-wrapper-2 py-5'>
+
+<div className="container-xxl">
+  <div className="row">
+    <div className="col-12">
+      <div className="service d-flex align-items-center justify-content-between "
+      >
+        <div className='d-flex align-items-center gap-15'>
+          <img src={service01} alt="services" />
+          <div>
+            <h6> Free Shipping  </h6>
+            <p className='mb-0'>from all order above 500  </p>
+          </div>
+        </div>
+        <div className='d-flex align-items-center gap-15'>
+          <img src={service02} alt="services" />
+          <div>
+            <h6>Daily surprice Offer</h6>
+            <p className='mb-0'> save upto 25% off </p>
+          </div>
+        </div>
+        <div className='d-flex align-items-center gap-15'>
+          <img src={service03} alt="services" />
+          <div>
+            <h6>Support 24/7 </h6>
+            <p className='mb-0'> Shop with an export  </p>
+          </div>
+        </div>
+        <div className='d-flex align-items-center gap-15'>
+          <img src={service04} alt="services" />
+          <div>
+            <h6>Affortable Prices </h6>
+            <p className='mb-0'> Get fectory Default price</p>
+          </div>
+        </div>
+        <div className='d-flex align-items-center gap-15'>
+          <img src={service05} alt="services" />
+          <div>
+            <h6>Secure Payment</h6>
+            <p className='mb-0'> 100 % protected payment </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+    </section>
       {/* <Container class1="home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
@@ -108,66 +154,87 @@ const Home = () => {
           </div>
         </div>
       </Container> */}
+
+
       <Container class1="home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
             <div className="categories d-flex justify-content-between flex-wrap align-items-center">
               <div className="d-flex gap align-items-center">
                 <div>
-                  <h6>Music & Gaming</h6>
+                  <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                <img src="images/camera.jpg" alt="camera" />
+                 <div className="w-24">
+                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
+                }}/>                 </div>
               </div>
               <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Cameras</h6>
+              <div>
+                  <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                <img src="images/camera.jpg" alt="camera" />
+                 <div className="w-24">
+                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
+                }}/>                 
+                </div>
               </div>
               <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Smart Tv</h6>
+              <div>
+                  <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                <img src="images/tv.jpg" alt="camera" />
+                 <div className="w-24">
+                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
+                }}/>                 </div>
               </div>
               <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Smart Watches</h6>
+              <div>
+                  <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                <img src="images/headphone.jpg" alt="camera" />
+                 <div className="w-24">
+                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
+                }}/>                 </div>
               </div>
               <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Music & Gaming</h6>
+              <div>
+                  <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                <img src="images/camera.jpg" alt="camera" />
+                 <div className="w-24">
+                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
+                }}/>                 </div>
               </div>
               <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Cameras</h6>
+                 <div>
+                  <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                <img src="images/camera.jpg" alt="camera" />
+                 <div className="w-24">
+                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
+                }}/>                 </div>
               </div>
               <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Smart Tv</h6>
+                 <div>
+                  <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                <img src="images/tv.jpg" alt="camera" />
+                 <div className="w-24">
+                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
+                }}/>                 </div>
               </div>
               <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Smart Watches</h6>
+                 <div>
+                  <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                <img src="images/headphone.jpg" alt="camera" />
+                 <div className="w-24">
+                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
+                }}/>                 </div>
               </div>
+             
+             
             </div>
           </div>
         </div>
@@ -184,7 +251,7 @@ const Home = () => {
         </div>
       </Container>
 
-      <Container class1="famous-wrapper py-5 home-wrapper-2">
+      {/* <Container class1="famous-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-3">
             <div className="famous-card position-relative">
@@ -247,7 +314,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
 
       <Container class1="special-wrapper py-5 home-wrapper-2">
         <div className="row">
@@ -281,22 +348,22 @@ const Home = () => {
             <div className="marquee-inner-wrapper card-wrapper">
               <Marquee className="d-flex">
                 <div className="mx-4 w-25">
-                  <img src="images/brand-01.png" alt="brand" />
+                  <img src="https://logos-world.net/wp-content/uploads/2020/05/Zara-Logo.png" style={{width:"120px"}} alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-02.png" alt="brand" />
+                  <img src="https://logos-world.net/wp-content/uploads/2020/04/HM-Logo-700x394.png" style={{width:"120px"}} alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-03.png" alt="brand" />
+                  <img src="https://logos-world.net/wp-content/uploads/2020/04/Levis-Logo-120x67.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-04.png" alt="brand" />
+                  <img src="https://logos-world.net/wp-content/uploads/2020/04/Louis-Vuitton-Logo-120x67.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-05.png" alt="brand" />
+                  <img src="https://logos-world.net/wp-content/uploads/2020/04/Air-Jordan-Logo-120x67.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-06.png" alt="brand" />
+                  <img src="https://logos-world.net/wp-content/uploads/2020/04/Supreme-Logo-120x67.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
                   <img src="images/brand-07.png" alt="brand" />

@@ -7,10 +7,10 @@ const SpecialProduct = () => {
       <div className="col-6 mb-3">
         <div className="special-product-card">
           <div className="d-flex justify-content-between">
-            <div>
+            <div className="col-5">
               <img src="images/watch.jpg" className="img-fluid" alt="watch" />
             </div>
-            <div className="special-product-content">
+            <div className="special-product-content col-6">
               <h5 className="brand">Havels</h5>
               <h6 className="title">
                 Samsung Galaxy Note10+ Mobile Phone; Sim...
