@@ -1,18 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
-import service01 from '../images/service.png'
-import service02 from '../images/service-02.png'
-import service03 from '../images/service-03.png'
-import service04 from '../images/service-04.png'
-import service05 from '../images/service-05.png'
-
+import service01 from "../images/service.png";
+import service02 from "../images/service-02.png";
+import service03 from "../images/service-03.png";
+import service04 from "../images/service-04.png";
+import service05 from "../images/service-05.png";
+import prodcompare from "../images/prodcompare.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllBlogs } from "../features/blogs/blogeSlice";
+import moment from "moment";
+import {
+  addToWishList,
+  getAllProducts,
+} from "../features/products/productSlice";
+import addcart from "../images/add-cart.svg";
+import wish from "../images/wish.svg";
+import view from "../images/view.svg";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const blogs = useSelector((state) => state?.blog?.blog);
+  const product = useSelector((state) => state?.product?.product);
+  console.log(product, "product");
+  useEffect(() => {
+    getAll();
+  }, []);
+  const addToWish = (id) => {
+    dispatch(addToWishList(id));
+  };
+  const getAll = () => {
+    dispatch(getAllBlogs());
+    dispatch(getAllProducts());
+  };
+  let location = useLocation();
   return (
     <>
       <Container class1="home-wrapper-1 py-5">
@@ -41,9 +66,9 @@ const Home = () => {
                   alt="main banner"
                 />
                 <div className="small-banner-content position-absolute">
-                <h4>SUPERstyliest FOR PROS.</h4>
-                <h5>Woman's Tshirt</h5>
-                <p>From 400 or 1500.</p>
+                  <h4>SUPERstyliest FOR PROS.</h4>
+                  <h5>Woman's Tshirt</h5>
+                  <p>From 400 or 1500.</p>
                 </div>
               </div>
               <div className="small-banner position-relative">
@@ -53,9 +78,9 @@ const Home = () => {
                   alt="main banner"
                 />
                 <div className="small-banner-content position-absolute">
-                <h4>SUPERstyliest FOR PROS.</h4>
-                <h5>Woman's Tshirt</h5>
-                <p>From 400 or 1500.</p>
+                  <h4>SUPERstyliest FOR PROS.</h4>
+                  <h5>Woman's Tshirt</h5>
+                  <p>From 400 or 1500.</p>
                 </div>
               </div>
               <div className="small-banner position-relative ">
@@ -65,9 +90,9 @@ const Home = () => {
                   alt="main banner"
                 />
                 <div className="small-banner-content position-absolute">
-                <h4>SUPERstyliest FOR PROS.</h4>
-                <h5>Woman's Tshirt</h5>
-                <p>From 400 or 1500.</p>
+                  <h4>SUPERstyliest FOR PROS.</h4>
+                  <h5>Woman's Tshirt</h5>
+                  <p>From 400 or 1500.</p>
                 </div>
               </div>
               <div className="small-banner position-relative ">
@@ -77,9 +102,9 @@ const Home = () => {
                   alt="main banner"
                 />
                 <div className="small-banner-content position-absolute">
-                <h4>SUPERstyliest FOR PROS.</h4>
-                <h5>Woman's Tshirt</h5>
-                <p>From 400 or 1500.</p>
+                  <h4>SUPERstyliest FOR PROS.</h4>
+                  <h5>Woman's Tshirt</h5>
+                  <p>From 400 or 1500.</p>
                 </div>
               </div>
             </div>
@@ -87,54 +112,51 @@ const Home = () => {
         </div>
       </Container>
 
-      <section className='home-wrapper-2 py-5'>
-
-<div className="container-xxl">
-  <div className="row">
-    <div className="col-12">
-      <div className="service d-flex align-items-center justify-content-between "
-      >
-        <div className='d-flex align-items-center gap-15'>
-          <img src={service01} alt="services" />
-          <div>
-            <h6> Free Shipping  </h6>
-            <p className='mb-0'>from all order above 500  </p>
+      <section className="home-wrapper-2 py-5">
+        <div className="container-xxl">
+          <div className="row">
+            <div className="col-12">
+              <div className="service d-flex align-items-center justify-content-between ">
+                <div className="d-flex align-items-center gap-15">
+                  <img src={service01} alt="services" />
+                  <div>
+                    <h6> Free Shipping </h6>
+                    <p className="mb-0">from all order above 500 </p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-15">
+                  <img src={service02} alt="services" />
+                  <div>
+                    <h6>Daily surprice Offer</h6>
+                    <p className="mb-0"> save upto 25% off </p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-15">
+                  <img src={service03} alt="services" />
+                  <div>
+                    <h6>Support 24/7 </h6>
+                    <p className="mb-0"> Shop with an export </p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-15">
+                  <img src={service04} alt="services" />
+                  <div>
+                    <h6>Affortable Prices </h6>
+                    <p className="mb-0"> Get fectory Default price</p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-15">
+                  <img src={service05} alt="services" />
+                  <div>
+                    <h6>Secure Payment</h6>
+                    <p className="mb-0"> 100 % protected payment </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className='d-flex align-items-center gap-15'>
-          <img src={service02} alt="services" />
-          <div>
-            <h6>Daily surprice Offer</h6>
-            <p className='mb-0'> save upto 25% off </p>
-          </div>
-        </div>
-        <div className='d-flex align-items-center gap-15'>
-          <img src={service03} alt="services" />
-          <div>
-            <h6>Support 24/7 </h6>
-            <p className='mb-0'> Shop with an export  </p>
-          </div>
-        </div>
-        <div className='d-flex align-items-center gap-15'>
-          <img src={service04} alt="services" />
-          <div>
-            <h6>Affortable Prices </h6>
-            <p className='mb-0'> Get fectory Default price</p>
-          </div>
-        </div>
-        <div className='d-flex align-items-center gap-15'>
-          <img src={service05} alt="services" />
-          <div>
-            <h6>Secure Payment</h6>
-            <p className='mb-0'> 100 % protected payment </p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-    </section>
+      </section>
       {/* <Container class1="home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
@@ -155,7 +177,6 @@ const Home = () => {
         </div>
       </Container> */}
 
-
       <Container class1="home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
@@ -165,76 +186,113 @@ const Home = () => {
                   <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                 <div className="w-24">
-                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
-                }}/>                 </div>
-              </div>
-              <div className="d-flex gap align-items-center">
-              <div>
-                  <h6>Man's t-shirt</h6>
-                  <p>10 Items</p>
-                </div>
-                 <div className="w-24">
-                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
-                }}/>                 
+                <div className="w-24">
+                  <img
+                    src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg"
+                    alt="camera"
+                    className="img-fluide "
+                    style={{ width: "110px" }}
+                  />{" "}
                 </div>
               </div>
               <div className="d-flex gap align-items-center">
-              <div>
+                <div>
                   <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                 <div className="w-24">
-                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
-                }}/>                 </div>
+                <div className="w-24">
+                  <img
+                    src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg"
+                    alt="camera"
+                    className="img-fluide "
+                    style={{ width: "110px" }}
+                  />
+                </div>
               </div>
               <div className="d-flex gap align-items-center">
-              <div>
+                <div>
                   <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                 <div className="w-24">
-                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
-                }}/>                 </div>
+                <div className="w-24">
+                  <img
+                    src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg"
+                    alt="camera"
+                    className="img-fluide "
+                    style={{ width: "110px" }}
+                  />{" "}
+                </div>
               </div>
               <div className="d-flex gap align-items-center">
-              <div>
+                <div>
                   <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                 <div className="w-24">
-                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
-                }}/>                 </div>
+                <div className="w-24">
+                  <img
+                    src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg"
+                    alt="camera"
+                    className="img-fluide "
+                    style={{ width: "110px" }}
+                  />{" "}
+                </div>
               </div>
               <div className="d-flex gap align-items-center">
-                 <div>
+                <div>
                   <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                 <div className="w-24">
-                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
-                }}/>                 </div>
+                <div className="w-24">
+                  <img
+                    src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg"
+                    alt="camera"
+                    className="img-fluide "
+                    style={{ width: "110px" }}
+                  />{" "}
+                </div>
               </div>
               <div className="d-flex gap align-items-center">
-                 <div>
+                <div>
                   <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                 <div className="w-24">
-                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
-                }}/>                 </div>
+                <div className="w-24">
+                  <img
+                    src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg"
+                    alt="camera"
+                    className="img-fluide "
+                    style={{ width: "110px" }}
+                  />{" "}
+                </div>
               </div>
               <div className="d-flex gap align-items-center">
-                 <div>
+                <div>
                   <h6>Man's t-shirt</h6>
                   <p>10 Items</p>
                 </div>
-                 <div className="w-24">
-                 <img src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg" alt="camera"  className="img-fluide " style={{width:"110px"
-                }}/>                 </div>
+                <div className="w-24">
+                  <img
+                    src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg"
+                    alt="camera"
+                    className="img-fluide "
+                    style={{ width: "110px" }}
+                  />{" "}
+                </div>
               </div>
-             
-             
+              <div className="d-flex gap align-items-center">
+                <div>
+                  <h6>Man's t-shirt</h6>
+                  <p>10 Items</p>
+                </div>
+                <div className="w-24">
+                  <img
+                    src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg"
+                    alt="camera"
+                    className="img-fluide "
+                    style={{ width: "110px" }}
+                  />{" "}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -244,14 +302,70 @@ const Home = () => {
           <div className="col-12">
             <h3 className="section-heading">Featured Collection</h3>
           </div>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {product &&
+            product?.map((item, index) => {
+              if (item?.tags === "featured") {
+                return (
+                  <div className="col-3" key={index}>
+                    <Link
+                      to={`${
+                        location.pathname === "/"
+                          ? "/product/:id"
+                          : location.pathname === "/product/:id"
+                          ? "/product/:id"
+                          : ":id"
+                      }`}
+                      className="product-card position-relative"
+                    >
+                      <div className="wishlist-icon position-absolute">
+                        <button
+                          className="border-0 bg-transparent"
+                          onClick={(e) => addToWish(item?._id)}
+                        >
+                          <img src={wish} alt="wishlist" />
+                        </button>
+                      </div>
+                      <div className="product-image">
+                        <img
+                          src={item?.images[0]?.url}
+                          className="img-fluid"
+                          alt="product image"
+                        />
+                        <img
+                          src={item?.images[1]?.url}
+                          className="img-fluid"
+                          alt="product image"
+                        />
+                      </div>
+
+                      <div className="product-details">
+                        <h6 className="brand"> {item?.brand}</h6>
+                        <h5 className="product-title">{item?.title}</h5>
+
+                        <p className="price">{item?.price}</p>
+                      </div>
+                      <div className="action-bar position-absolute">
+                        <div className="d-flex flex-column gap-15">
+                          <button className="border-0 bg-transparent">
+                            <img src={prodcompare} alt="compare" />
+                          </button>
+                          <button className="border-0 bg-transparent">
+                            <img src={view} alt="view" />
+                          </button>
+                          <button className="border-0 bg-transparent">
+                            <img src={addcart} alt="addcart" />
+                          </button>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              }
+            })}
         </div>
       </Container>
 
-      {/* <Container class1="famous-wrapper py-5 home-wrapper-2">
+      <Container class1="famous-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-3">
             <div className="famous-card position-relative">
@@ -314,7 +428,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container> */}
+      </Container>
 
       <Container class1="special-wrapper py-5 home-wrapper-2">
         <div className="row">
@@ -323,24 +437,21 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
+          {product &&
+            product?.map((item, index) => {
+              if (item?.tags === "special")
+                return <SpecialProduct key={index} item={item} />;
+            })}
         </div>
       </Container>
+
       <Container class1="popular-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Our Popular Products</h3>
           </div>
         </div>
-        <div className="row">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-        </div>
+        <div className="row"></div>
       </Container>
       <Container class1="marque-wrapper home-wrapper-2 py-5">
         <div className="row">
@@ -348,22 +459,42 @@ const Home = () => {
             <div className="marquee-inner-wrapper card-wrapper">
               <Marquee className="d-flex">
                 <div className="mx-4 w-25">
-                  <img src="https://logos-world.net/wp-content/uploads/2020/05/Zara-Logo.png" style={{width:"120px"}} alt="brand" />
+                  <img
+                    src="https://logos-world.net/wp-content/uploads/2020/05/Zara-Logo.png"
+                    style={{ width: "120px" }}
+                    alt="brand"
+                  />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="https://logos-world.net/wp-content/uploads/2020/04/HM-Logo-700x394.png" style={{width:"120px"}} alt="brand" />
+                  <img
+                    src="https://logos-world.net/wp-content/uploads/2020/04/HM-Logo-700x394.png"
+                    style={{ width: "120px" }}
+                    alt="brand"
+                  />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="https://logos-world.net/wp-content/uploads/2020/04/Levis-Logo-120x67.png" alt="brand" />
+                  <img
+                    src="https://logos-world.net/wp-content/uploads/2020/04/Levis-Logo-120x67.png"
+                    alt="brand"
+                  />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="https://logos-world.net/wp-content/uploads/2020/04/Louis-Vuitton-Logo-120x67.png" alt="brand" />
+                  <img
+                    src="https://logos-world.net/wp-content/uploads/2020/04/Louis-Vuitton-Logo-120x67.png"
+                    alt="brand"
+                  />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="https://logos-world.net/wp-content/uploads/2020/04/Air-Jordan-Logo-120x67.png" alt="brand" />
+                  <img
+                    src="https://logos-world.net/wp-content/uploads/2020/04/Air-Jordan-Logo-120x67.png"
+                    alt="brand"
+                  />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="https://logos-world.net/wp-content/uploads/2020/04/Supreme-Logo-120x67.png" alt="brand" />
+                  <img
+                    src="https://logos-world.net/wp-content/uploads/2020/04/Supreme-Logo-120x67.png"
+                    alt="brand"
+                  />
                 </div>
                 <div className="mx-4 w-25">
                   <img src="images/brand-07.png" alt="brand" />
@@ -384,18 +515,24 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-3">
-            <BlogCard />
-          </div>
-          <div className="col-3">
-            <BlogCard />
-          </div>
-          <div className="col-3">
-            <BlogCard />
-          </div>
-          <div className="col-3">
-            <BlogCard />
-          </div>
+          {blogs &&
+            blogs?.map((item, index) => {
+              if (index < 4) {
+                return (
+                  <div className="col-3" key={item?._id}>
+                    <BlogCard
+                      id={item?._id}
+                      title={item?.title}
+                      description={item?.description}
+                      images={item?.images[0]?.url}
+                      date={moment(item?.createdAt).format(
+                        "MMMM do YYYY h:mm a"
+                      )}
+                    />
+                  </div>
+                );
+              }
+            })}
         </div>
       </Container>
     </>
