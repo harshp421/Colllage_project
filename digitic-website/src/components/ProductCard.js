@@ -8,6 +8,8 @@ import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
 import { useDispatch } from "react-redux";
 import { addToWishList } from "../features/products/productSlice";
+
+
 const ProductCard = (props) => {
   const { grid, data } = props;
 
@@ -15,6 +17,7 @@ const ProductCard = (props) => {
 
   const dispatch = useDispatch();
   const addToWish = (id) => {
+     alert("product added")
     dispatch(addToWishList(id));
   };
 
@@ -29,7 +32,7 @@ const ProductCard = (props) => {
               } `}
               key={index}
             >
-              <Link
+              <div
                 to={`${
                   location.pathname == "/"
                     ? "/product/:id"
@@ -41,20 +44,20 @@ const ProductCard = (props) => {
               >
                 <div className="wishlist-icon position-absolute">
                   <button
-                    className="border-0 bg-transparent"
-                    onClick={(e) => addToWish(item?._id)}
+                    className="border-0 bg-transparentx`x`  "
+                    onClick={() => addToWish(item?._id)}
                   >
                     <img src={wish} alt="wishlist" />
                   </button>
                 </div>
                 <div className="product-image">
                   <img
-                    src={item?.images[0]?.url}
+                    src={item?.images[1]?.url}
                     className="img-fluid"
                     alt="product image"
                   />
                   <img
-                    src={item?.images[1]?.url}
+                    src={item?.images[0]?.url}
                     className="img-fluid"
                     alt="product image"
                   />
@@ -83,15 +86,15 @@ const ProductCard = (props) => {
                     <button className="border-0 bg-transparent">
                       <img src={prodcompare} alt="compare" />
                     </button>
-                    <button className="border-0 bg-transparent">
+                    <Link to={`/product/${item._id}`} className="border-0 bg-transparent">
                       <img src={view} alt="view" />
-                    </button>
+                    </Link>
                     <button className="border-0 bg-transparent">
                       <img src={addcart} alt="addcart" />
                     </button>
                   </div>
                 </div>
-              </Link>
+              </div>
             </div>
           );
         })}

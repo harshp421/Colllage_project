@@ -1,29 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { productService } from "./productService";
 import { contactService } from "./contactService";
 
+
 export const createQuery = createAsyncThunk(
-  "product/get",
+  "contact/post",
   async (contactDate, thunkAPI) => {
     try {
-      return await contactService.postQuery(contactDate);
+      return await  contactService.postQuery(contactDate);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const addToWishList = createAsyncThunk(
-  "product/wishlist",
-  async (productId, thunkAPI) => {
-    try {
-      return await productService.addToWishList(productId);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
+// export const addToWishList = createAsyncThunk(
+//   "product/wishlist",
+//   async (productId, thunkAPI) => {
+//     try {
+//       return await productService.addToWishList(productId);
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//   }
+// );
 
 const contactState = {
   contact: "",
@@ -47,6 +47,10 @@ export const contactSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.contact = action.payload;
+        if(state.isSuccess === true)
+        {
+            toast.success("Contact form Submit successfully")
+        }
       })
       .addCase(createQuery.rejected, (state, action) => {
         state.isError = true;
@@ -54,7 +58,7 @@ export const contactSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError === true) {
-          toast.error(action.error);
+          toast.error("Sumthing want Wrong");
         }
       });
   },

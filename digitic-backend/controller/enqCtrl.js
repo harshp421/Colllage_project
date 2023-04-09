@@ -4,6 +4,7 @@ const validateMongoDbId = require("../utils/validateMongodbId");
 
 const createEnquiry = asyncHandler(async (req, res) => {
   try {
+    console.log(req.body,"helo");
     const newEnquiry = await Enquiry.create(req.body);
     res.json(newEnquiry);
   } catch (error) {

@@ -1,15 +1,16 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const SpecialProduct = ({ item }) => {
-  const { brand, title, totalrating, price, quantity, sold, images } = item;
+  const navigate=useNavigate();
+  const { brand, title, totalrating, price, quantity, sold, images,_id } = item;
   return (
     <>
       <div className="col-6 mb-3">
         <div className="special-product-card">
           <div className="d-flex justify-content-between">
             <div className="col-5">
-              <img src={images[0].url} className="img-fluid" alt="watch" />
+              <img src={images[1].url} className="img-fluid" alt="watch" />
             </div>
             <div className="special-product-content col-6">
               <h5 className="brand">{brand}</h5>
@@ -48,7 +49,7 @@ const SpecialProduct = ({ item }) => {
                   ></div>
                 </div>
               </div>
-              <Link className="button">Add to Cart</Link>
+              <Link className="button"  to={`/product/${_id}`}>View</Link>
             </div>
           </div>
         </div>
