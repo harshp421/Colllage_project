@@ -7,7 +7,7 @@ import ReactImageZoom from "react-image-zoom";
 import Color from "../components/Color";
 import { TbGitCompare } from "react-icons/tb";
 import { AiOutlineHeart } from "react-icons/ai";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import watch from "../images/watch.jpg";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,55 +15,55 @@ import { getAProduct } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addProductToCart } from "../features/user/userSlice";
 const SingleProduct = () => {
+  const navigate = useNavigate();
+  const [color, setColor] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [alreadyAdded, setAlreadyAdded] = useState(false);
+  const param = useParams();
+  console.log(quantity, "id");
+  const dispatch = useDispatch();
+  const productState = useSelector((state) => state.product.singleproduct);
+  const cartState = useSelector((state) => state?.auth?.cartProducts);
 
-    const [color, setColor] = useState(null);
-    const [quantity, setQuantity] = useState(1);
-    const [alreadyAdded,setAlreadyAdded]=useState(false);
-  const param=useParams();
-  console.log(quantity,"id");
-   const dispatch=useDispatch();
-   const productState=useSelector((state)=>state.product.singleproduct)
-   const cartState=useSelector((state)=>state?.auth?.cartProducts)
+  console.log(cartState, "single product");
+  useEffect(() => {
+    dispatch(getAProduct(param.id));
+  }, []);
 
-   console.log(cartState,"single product");
-   useEffect(() => {
-     dispatch(getAProduct(param.id))
-   }, [])
-
-  
-   useEffect(() => {
-    
+  useEffect(() => {
     for (let index = 0; index < cartState?.length; index++) {
-        if(param.id === cartState[index]?.productId?._id)
-        {
-          setAlreadyAdded(true)
-        }
-      
+      if (param.id === cartState[index]?.productId?._id) {
+        setAlreadyAdded(true);
+      }
     }
+  }, []);
 
-   }, [])
-   
-   const uploadCart=()=>{
-     
-    if(color === null)
-    {
+  const uploadCart = () => {
+    if (color === null) {
       toast.error("Please Choes color");
       return false;
-    }else
-    {  
-      console.log(color,"color");
-      dispatch(addProductToCart({productId:productState?._id,quantity,color,price:productState?.price}))
+    } else {
+      console.log(color, "color");
+      dispatch(
+        addProductToCart({
+          productId: productState?._id,
+          quantity,
+          color,
+          price: productState?.price,
+        })
+      );
     }
-   }
+  };
 
   const props = {
     width: 600,
     height: 600,
     zoomWidth: 600,
-     img: (productState?.images[0]?.url ?(productState?.images[0]?.url):"https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg" ),
+    img: productState?.images[0]?.url
+      ? productState?.images[0]?.url
+      : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
   };
 
-  
   const [orderedProduct, setorderedProduct] = useState(true);
   const copyToClipboard = (text) => {
     console.log("text", text);
@@ -83,7 +83,7 @@ const SingleProduct = () => {
         <div className="row">
           <div className="col-6">
             <div className="main-product-image">
-              <div >
+              <div>
                 <ReactImageZoom {...props} />
               </div>
             </div>
@@ -121,9 +121,7 @@ const SingleProduct = () => {
           <div className="col-6">
             <div className="main-product-details">
               <div className="border-bottom">
-                <h3 className="title">
-                {productState?.title}
-                </h3>
+                <h3 className="title">{productState?.title}</h3>
               </div>
               <div className="border-bottom py-3">
                 <p className="price">${productState?.price}</p>
@@ -179,48 +177,53 @@ const SingleProduct = () => {
                     </span>
                   </div>
                 </div>
-                {
-                  alreadyAdded === false && 
+                {alreadyAdded === false && (
                   <>
-                   <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Color :</h3>
-                  <Color setColor={setColor} colorData={productState?.color} />
-                </div>
+                    <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                      <h3 className="product-heading">Color :</h3>
+                      <Color
+                        setColor={setColor}
+                        colorData={productState?.color}
+                      />
+                    </div>
                   </>
-                }
-               
-                <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
-                  
+                )}
 
-                   {
-                    alreadyAdded === false &&<>
-                     <h3 className="product-heading">Quantity :</h3>
-                     <div className="">
-                    <input
-                      type="number"
-                      name=""
-                      min={1}
-                      max={10}
-                      className="form-control"
-                      style={{ width: "70px" }}
-                      id=""
-                      onChange={(e)=>setQuantity(e.target.value)}
-                      value={quantity}
-                    />
-                  </div>
-                    </> 
-                   }
-                
-                  <div className="d-flex align-items-center gap-30 ms-5">
+                <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
+                  {alreadyAdded === false && (
+                    <>
+                      <h3 className="product-heading">Quantity :</h3>
+                      <div className="">
+                        <input
+                          type="number"
+                          name=""
+                          min={1}
+                          max={10}
+                          className="form-control"
+                          style={{ width: "70px" }}
+                          id=""
+                          onChange={(e) => setQuantity(e.target.value)}
+                          value={quantity}
+                        />
+                      </div>
+                    </>
+                  )}
+
+                  <div
+                    className={`${
+                      alreadyAdded ? "ms-0" : "ms-5"
+                    }d-flex align-items-center gap-30 ms-5`}
+                  >
                     <button
                       className="button border-0"
                       // data-bs-toggle="modal"
                       // data-bs-target="#staticBackdrop"
                       type="button"
-                      onClick={()=>{uploadCart()}}
+                      onClick={() => {
+                        alreadyAdded ? navigate("/cart") : uploadCart();
+                      }}
                     >
-                    
-                     {alreadyAdded?"Go to cart":"Add to cart"}  
+                      {alreadyAdded ? "Go to cart" : "Add to cart"}
                     </button>
                     <button className="button signup">Buy It Now</button>
                   </div>
@@ -250,9 +253,7 @@ const SingleProduct = () => {
                   <a
                     href="javascript:void(0);"
                     onClick={() => {
-                      copyToClipboard(
-                         window.location.href
-                      );
+                      copyToClipboard(window.location.href);
                     }}
                   >
                     Copy Product Link
@@ -268,11 +269,11 @@ const SingleProduct = () => {
           <div className="col-12">
             <h4>Description</h4>
             <div className="bg-white p-3">
-              <p dangerouslySetInnerHTML={{
-                __html:productState?.description
-              }}>
-             
-              </p>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: productState?.description,
+                }}
+              ></p>
             </div>
           </div>
         </div>

@@ -82,24 +82,23 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-      }).addCase( getAProduct .pending, (state) => {
+      })
+      .addCase(getAProduct.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase( getAProduct .fulfilled, (state, action) => {
+      .addCase(getAProduct.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.singleproduct= action.payload;
+        state.singleproduct = action.payload;
         state.message = "Product fatch Successfully";
       })
-      .addCase( getAProduct .rejected, (state, action) => {
+      .addCase(getAProduct.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
       });
-      
-
   },
 });
 

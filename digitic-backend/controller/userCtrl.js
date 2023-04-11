@@ -12,6 +12,7 @@ const { generateRefreshToken } = require("../config/refreshtoken");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("./emailCtrl");
+const cartModel = require("../models/cartModel");
 
 // Create a User ----------------------------------------------
 
@@ -374,31 +375,9 @@ const getUserCart = asyncHandler(async (req, res) => {
   }
 });
 
-const removeProductFromCart = async (req, res) => {
+const deleteProductFromCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { cartItemId } = req.params;
-
-  console.log(req.params.id);
-  validateMongoDbId(_id);
-  try {
-    const cartItem = await Cart.findOne({
-      userId: _id,
-      _id: cartItemId,
-    });
-
-    cartItem.quantity = newQuantity;
-    cartItem.save();
-    res.json(cartItem);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-const updateProductQuantityFromCart = async (req, res) => {
-  const { _id } = req.user;
-  const { cartItemId, newQuantity } = req.body;
-
-  console.log(req.params.id);
+  const { cartItemId } = req.body;
   validateMongoDbId(_id);
   try {
     const deleteProductFromCart = await Cart.deleteOne({
@@ -409,7 +388,7 @@ const updateProductQuantityFromCart = async (req, res) => {
   } catch (error) {
     throw new Error(error);
   }
-};
+});
 
 const emptyCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
@@ -575,6 +554,5 @@ module.exports = {
   updateOrderStatus,
   getAllOrders,
   getOrderByUserId,
-  removeProductFromCart,
-  removeProductFromCart,
+  deleteProductFromCart,
 };

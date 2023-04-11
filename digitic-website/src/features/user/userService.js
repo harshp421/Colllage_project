@@ -1,4 +1,4 @@
-  import axios from "axios";
+import axios from "axios";
 import { base_url, config } from "../../util/axiosConfig";
 const register = async (userDate) => {
   const response = await axios.post(`${base_url}user/register`, userDate);
@@ -11,45 +11,55 @@ const login = async (userDate) => {
   const response = await axios.post(`${base_url}user/login`, userDate);
   console.log(response.data);
   if (response.data) {
-      if(response.data)
-      {
-        localStorage.setItem("customer",JSON.stringify(response.data))
-      }
-    return response .data;
+    if (response.data) {
+      localStorage.setItem("customer", JSON.stringify(response.data));
+    }
+    return response.data;
   }
 };
 
-const getUserWishlist=async()=>{
-     const response = await axios.get(`${base_url}user/wishlist`, config);
-      if (response.data) {
-        console.log(response,"responce");
+const getUserWishlist = async () => {
+  const response = await axios.get(`${base_url}user/wishlist`, config);
+  if (response.data) {
+    console.log(response, "responce");
     return response.data;
   }
-}
+};
 
-const AddToCart=async(cartData)=>{
-  const response=await axios.post(`${base_url}user/cart`,cartData,config);
+const AddToCart = async (cartData) => {
+  const response = await axios.post(`${base_url}user/cart`, cartData, config);
   if (response.data) {
-    console.log(response,"responce");
-      return response.data;
+    console.log(response, "responce");
+    return response.data;
+  }
+};
 
-}
-}
-
-const getCart=async()=>{
-  const response=await axios.get(`${base_url}user/cart`,config);
+const getCart = async () => {
+  const response = await axios.get(`${base_url}user/cart`, config);
   if (response.data) {
-    console.log(response,"responce");
-      return response.data;
+    console.log(response, "responce");
+    return response.data;
+  }
+};
 
-}
-}
+const removeProductFromCart = async ({ cartItemId }) => {
+  console.log(cartItemId, "cart Td");
+  const response = await axios.delete(
+    `${base_url}user/delete-product-cart/${cartItemId}`,
 
+    config
+  );
+  if (response.data) {
+    console.log(response, "responce");
+    return response.data;
+  }
+};
 
 export const authService = {
   register,
   login,
   getUserWishlist,
   AddToCart,
-  getCart
+  getCart,
+  removeProductFromCart,
 };
