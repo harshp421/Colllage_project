@@ -35,11 +35,9 @@ export const getUserProductWishlist = createAsyncThunk(
   }
 );
 
-
-
 export const addProductToCart = createAsyncThunk(
   "user/cart/add",
-  async (cartData,thunkAPI) => {
+  async (cartData, thunkAPI) => {
     try {
       return await authService.AddToCart(cartData);
     } catch (error) {
@@ -58,11 +56,22 @@ export const getUserCart = createAsyncThunk(
   }
 );
 
+export const DeleteCartProduct = createAsyncThunk(
+  "user/cart/product/delete",
+  async (cartItemId, thunkAPI) => {
+    console.log(cartItemId, "Id");
+    try {
+      return await authService.removeProductFromCart(cartItemId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const getCusromerfromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
   : null;
- 
+
 const initialState = {
   user: getCusromerfromLocalStorage,
   isError: false,
@@ -132,49 +141,69 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.wistlist= action.payload;
-      
+        state.wistlist = action.payload;
       })
       .addCase(getUserProductWishlist.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-      }) .addCase(addProductToCart.pending, (state) => {
+      })
+      .addCase(addProductToCart.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(addProductToCart.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.cartProduct= action.payload;
-        if(state.isSuccess)
-        {
-          toast.success("Product Added to cart")
+        state.cartProduct = action.payload;
+        if (state.isSuccess) {
+          toast.success("Product Added to cart");
         }
-      
       })
       .addCase(addProductToCart.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-      }) .addCase(getUserCart.pending, (state) => {
+      })
+      .addCase(getUserCart.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getUserCart.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.cartProducts= action.payload;
-        console.log(action.payload,"cart data in user slice");
-       
+        state.cartProducts = action.payload;
+        console.log(action.payload, "cart data in user slice");
       })
       .addCase(getUserCart.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
+      })
+      .addCase(DeleteCartProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(DeleteCartProduct.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.DeleteCartProduct = action.payload;
+        console.log(action.payload, "cart data in user slice");
+        if (state.isSuccess === true) {
+          toast.success("Product Delete From Cart");
+        }
+      })
+      .addCase(DeleteCartProduct.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isSuccess === false) {
+          toast.error("Something Want Wrong");
+        }
       });
   },
 });
