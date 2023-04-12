@@ -32,10 +32,12 @@ const OurStore = () => {
               <h3 className="filter-title">Shop By Categories</h3>
               <div>
                 <ul className="ps-0">
-                  <li>Watch</li>
-                  <li>Tv</li>
-                  <li>Camera</li>
-                  <li>Laptop</li>
+                  <li>Man's T-Shirt</li>
+                  <li>Woman's T-Shirt</li>
+                  <li>Man's Shirt</li>
+                  <li>Woman's Shirt</li>
+                  <li>Cap</li>
+                  <li>Shoes</li>
                 </ul>
               </div>
             </div>

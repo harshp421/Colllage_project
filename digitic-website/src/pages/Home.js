@@ -24,7 +24,7 @@ import view from "../images/view.svg";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const blogs = useSelector((state) => state?.blog?.blog);
   const product = useSelector((state) => state?.product?.product);
 
@@ -309,16 +309,7 @@ const Home = () => {
               if (item?.tags === "featured") {
                 return (
                   <div className="col-3" key={index}>
-                    <div
-                      // to={`${
-                      //   location.pathname === "/"
-                      //     ? "/product/:id"
-                      //     : location.pathname === "/product/:id"
-                      //     ? "/product/:id"
-                      //     : ":id"
-                      // }`}
-                      className="product-card position-relative"
-                    >
+                    <div className="product-card position-relative">
                       <div className="wishlist-icon position-absolute">
                         <button
                           className="border-0 bg-transparent"
@@ -331,12 +322,12 @@ const Home = () => {
                         <img
                           src={item?.images[0]?.url}
                           className="img-fluid"
-                          alt="product image"
+                          alt="product"
                         />
                         <img
                           src={item?.images[1]?.url}
                           className="img-fluid"
-                          alt="product image"
+                          alt="product "
                         />
                       </div>
 
@@ -352,7 +343,11 @@ const Home = () => {
                             <img src={prodcompare} alt="compare" />
                           </button>
                           <button className="border-0 bg-transparent">
-                            <img onClick={()=>navigate('/product/'+item?._id)} src={view} alt="view" />
+                            <img
+                              onClick={() => navigate("/product/" + item?._id)}
+                              src={view}
+                              alt="view"
+                            />
                           </button>
                           <button className="border-0 bg-transparent">
                             <img src={addcart} alt="addcart" />
@@ -454,7 +449,7 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-        {product &&
+          {product &&
             product?.map((item, index) => {
               if (item?.tags === "popular") {
                 return (
@@ -502,7 +497,11 @@ const Home = () => {
                             <img src={prodcompare} alt="compare" />
                           </button>
                           <button className="border-0 bg-transparent">
-                            <img onClick={()=>navigate('/product/'+item?._id)} src={view} alt="view" />
+                            <img
+                              onClick={() => navigate("/product/" + item?._id)}
+                              src={view}
+                              alt="view"
+                            />
                           </button>
                           <button className="border-0 bg-transparent">
                             <img src={addcart} alt="addcart" />
@@ -530,7 +529,7 @@ const Home = () => {
                 </div>
                 <div className="mx-4 w-25">
                   <img
-                    src="https://logos-world.net/wp-content/uploads/2020/04/HM-Logo-700x394.png"  
+                    src="https://logos-world.net/wp-content/uploads/2020/04/HM-Logo-700x394.png"
                     style={{ width: "120px" }}
                     alt="brand"
                   />

@@ -13,7 +13,7 @@ import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAProduct } from "../features/products/productSlice";
 import { toast } from "react-toastify";
-import { addProductToCart } from "../features/user/userSlice";
+import { addProductToCart, getUserCart } from "../features/user/userSlice";
 const SingleProduct = () => {
   const navigate = useNavigate();
   const [color, setColor] = useState(null);
@@ -25,18 +25,24 @@ const SingleProduct = () => {
   const productState = useSelector((state) => state.product.singleproduct);
   const cartState = useSelector((state) => state?.auth?.cartProducts);
 
-  console.log(cartState, "single product");
+  console.log(cartState, "cart product");
+
   useEffect(() => {
     dispatch(getAProduct(param.id));
   }, []);
+
+  // useEffect(() => {
+  //   dispatch(getUserCart());
+  // }, []);
 
   useEffect(() => {
     for (let index = 0; index < cartState?.length; index++) {
       if (param.id === cartState[index]?.productId?._id) {
         setAlreadyAdded(true);
+        console.log("true");
       }
     }
-  }, []);
+  }, [alreadyAdded]);
 
   const uploadCart = () => {
     if (color === null) {
@@ -52,6 +58,7 @@ const SingleProduct = () => {
           price: productState?.price,
         })
       );
+      dispatch(getUserCart());
     }
   };
 
@@ -216,14 +223,14 @@ const SingleProduct = () => {
                   >
                     <button
                       className="button border-0"
-                      // data-bs-toggle="modal"
-                      // data-bs-target="#staticBackdrop"
                       type="button"
                       onClick={() => {
-                        alreadyAdded ? navigate("/cart") : uploadCart();
+                        alreadyAdded === true
+                          ? navigate("/cart")
+                          : uploadCart();
                       }}
                     >
-                      {alreadyAdded ? "Go to cart" : "Add to cart"}
+                      {alreadyAdded === true ? "Go to cart" : "Add to cart"}
                     </button>
                     <button className="button signup">Buy It Now</button>
                   </div>
@@ -335,7 +342,7 @@ const SingleProduct = () => {
               <div className="reviews mt-4">
                 <div className="review">
                   <div className="d-flex gap-10 align-items-center">
-                    <h6 className="mb-0">Navdeep</h6>
+                    <h6 className="mb-0">harsh</h6>
                     <ReactStars
                       count={5}
                       size={24}
