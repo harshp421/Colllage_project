@@ -13,6 +13,6 @@ router.post(
   uploadImages
 );
 
-router.delete("/delete-img/:id", authMiddleware, isAdmin, deleteImages);
+  router.delete("/delete-img/:id", authMiddleware, isAdmin, deleteImages);
 
 module.exports = router;
