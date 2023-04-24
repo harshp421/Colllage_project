@@ -168,6 +168,7 @@ footer .input-group-text {
   letter-spacing: -2px;
   font-weight: 500;
   text-transform: none;
+  color: white;
 }
 
 .main-banner-content p {
@@ -195,8 +196,9 @@ footer .input-group-text {
 .small-banner-content h5 {
   font-size: 22px;
   line-height: 34px;
-  letter-spacing: -2px;
+  letter-spacing: -1px;
   font-weight: 500;
+  color: whitesmoke;
   text-transform: none;
 }
 
@@ -321,12 +323,14 @@ footer .input-group-text {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .product-card .product-image {
   height: 300px;
-
+ display: flex;
+ justify-content: center;
+ align-items: center;  
 }
 
 .product-card .product-image img {
@@ -346,6 +350,8 @@ footer .input-group-text {
 
 .product-card:hover .product-image>img:last-child {
   display: block;
+    margin: auto;
+
 }
 
 .product-card:hover .action-bar {

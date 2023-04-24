@@ -4,6 +4,18 @@ import { getUserCart, updateCartProduct } from "../features/user/userSlice";
 import { AiFillDelete } from "react-icons/ai";
 
 const SingleCart = ({ item, index, DeleteCartProducts, setTotalAmount }) => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer")
+  ? JSON.parse(localStorage.getItem("customer"))
+  : null;
+
+const config2 = {
+  headers: {
+    Authorization: `Bearer ${
+      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+    }`,
+    Accept: "application/json",
+  },
+};
   const [productUpdateDetail, setproductUpdateDetail] = useState(null);
   const dispatch = useDispatch();
 
@@ -17,7 +29,7 @@ const SingleCart = ({ item, index, DeleteCartProducts, setTotalAmount }) => {
         })
       );
       setTimeout(() => {
-        dispatch(getUserCart());
+        dispatch(getUserCart(config2));
       }, 100);
     }
   }, [productUpdateDetail]);
@@ -54,13 +66,14 @@ const SingleCart = ({ item, index, DeleteCartProducts, setTotalAmount }) => {
             <input
               className="form-control"
               type="number"
-              name=""
+              name={"quantity"+item?._id}
+              id={"cart"+item?._id}
               min={1}
               max={10}
               value={
                 productUpdateDetail?.quantity
-                  ? productUpdateDetail?.quantity
-                  : item?.quantity
+                ? productUpdateDetail?.quantity
+                : item?.quantity
               }
               onChange={(e) => {
                 console.log(e.target.value, "target");
@@ -69,7 +82,7 @@ const SingleCart = ({ item, index, DeleteCartProducts, setTotalAmount }) => {
                   quantity: e.target.value,
                 });
               }}
-              id=""
+              
             />
           </div>
           <div>

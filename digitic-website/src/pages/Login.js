@@ -6,12 +6,14 @@ import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/user/userSlice";
+import { useEffect } from "react";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const authstate=useSelector(state=>state?.auth);
   let loginSchema = yup.object({
     email: yup.string().required("email is required"),
     password: yup.string().required("Password is required "),
@@ -26,9 +28,19 @@ const Login = () => {
     onSubmit: (values) => {
       console.log(values);
       dispatch(loginUser(values));
-      navigate("/");
-    },
+     
+   
+      
+},
   });
+
+
+  useEffect(()=>{
+    if(authstate?.user !== null && authstate.isError === false)
+    {
+      navigate("/")
+    }
+  },[authstate])
   return (
     <>
       <Meta title={"Login"} />

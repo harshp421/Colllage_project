@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import compare from "../images/compare.svg";
 import wishlist from "../images/wishlist.svg";
@@ -7,13 +7,38 @@ import user from "../images/user.svg";
 import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
 import { useDispatch, useSelector } from "react-redux";
+import { Typeahead } from 'react-bootstrap-typeahead'; // ES2015
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { getUserCart } from "../features/user/userSlice";
+import { getAProduct } from "../features/products/productSlice";
 const Header = () => {
+  const [paginate, setPaginate] = useState(true);
+  
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state?.auth?.cartProducts);
-  console.log(cartState, " state");
+  const  authstate=useSelector(state=>state?.auth);
+  const productstate=useSelector(state=>state?.product?.product)
+  console.log(authstate, "user state");
   const [totalamount, setTotalAmount] = useState(null);
+  const [productOpt, setProductOpt] = useState([])
 
+
+  
+  const getTokenFromLocalStorage = localStorage.getItem("customer")
+  ? JSON.parse(localStorage.getItem("customer"))
+  : null;
+
+const config3 = {
+  headers: {
+    Authorization: `Bearer ${
+      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+    }`,
+    Accept: "application/json",
+  },
+};
   useEffect(() => {
+
+
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
       sum = sum + Number(cartState[index]?.quantity) * cartState[index].price;
@@ -22,6 +47,24 @@ const Header = () => {
     setTotalAmount(sum);
   }, [cartState]);
 
+  useEffect(() => {
+   const data=[];
+   for (let index = 0; index < productstate.length; index++) {
+    const element = productstate[index];
+    data.push({id:index,prod:element?._id,name:element?.title})
+   }
+   setProductOpt(data);
+  }, [productstate])
+   const navigate=useNavigate();
+
+  useEffect(() => {
+    dispatch(getUserCart(config3));
+  }, []);
+
+  const handleLogout=()=>{
+    localStorage.clear(); 
+    window.location.reload();
+  }
   return (
     <>
       <header className="header-top-strip py-3">
@@ -29,14 +72,14 @@ const Header = () => {
           <div className="row">
             <div className="col-6">
               <p className="text-white mb-0">
-                Free Shipping Over $100 & Free Returns
+                Free Shipping Over ₹ 1500 & Free Returns
               </p>
             </div>
             <div className="col-6">
               <p className="text-end text-white mb-0">
                 Hotline:
-                <a className="text-white" href="tel:+91 8264954234">
-                  +91 8264954234
+                <a className="text-white" href="tel:+91 9537128189x`">
+                  +91 9537128189
                 </a>
               </p>
             </div>
@@ -53,13 +96,20 @@ const Header = () => {
             </div>
             <div className="col-5">
               <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control py-2"
-                  placeholder="Search Product Here..."
-                  aria-label="Search Product Here..."
-                  aria-describedby="basic-addon2"
-                />
+              <Typeahead
+            id="pagination-example"
+            onChange={(selected)=>{
+              navigate(`/product/${selected[0]?.prod}`)
+              dispatch(getAProduct(selected[0]?.prod))
+            }}
+            minLength={2}
+           onPaginate={() => console.log('Results paginated')}
+            options={productOpt}
+          paginate={paginate}
+            labelKey={"name"}
+
+        placeholder="Search for product here..."
+      />
                 <span className="input-group-text p-3" id="basic-addon2">
                   <BsSearch className="fs-6" />
                 </span>
@@ -91,13 +141,17 @@ const Header = () => {
                 </div>
                 <div>
                   <Link
-                    to="/login"
+                    to={ authstate?.user===null?"/login":"/my-profile"}
                     className="d-flex align-items-center gap-10 text-white"
                   >
                     <img src={user} alt="user" />
-                    <p className="mb-0">
+                    {
+                      authstate?.user===null?<p className="mb-0">
                       Log in <br /> My Account
+                    </p>:<p className="mb-0">
+                      Welcome {authstate?.user?.firstname}
                     </p>
+                    }
                   </Link>
                 </div>
                 <div>
@@ -143,25 +197,16 @@ const Header = () => {
                       aria-labelledby="dropdownMenuButton1"
                     >
                       <li>
-                        <Link className="dropdown-item text-white" to="">
+                        <Link className="dropdown-item text-white" to="/product">
                           Man's
                         </Link>
                       </li>
                       <li>
-                        <Link className="dropdown-item text-white" to="">
+                        <Link className="dropdown-item text-white" to="/product">
                           Woman
                         </Link>
                       </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="">
-                          children
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="">
-                          perfume
-                        </Link>
-                      </li>
+                     
                     </ul>
                   </div>
                 </div>
@@ -169,8 +214,14 @@ const Header = () => {
                   <div className="d-flex align-items-center gap-15">
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our Store</NavLink>
+                    <NavLink to="/my-orders">MY orders</NavLink>
                     <NavLink to="/blogs">Blogs</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
+                    <button className="border border-0 bg-transparent text-white 
+                    text-uppercase
+                    " 
+                    onClick={handleLogout}
+                    type="button">Logout</button>
                   </div>
                 </div>
               </div>

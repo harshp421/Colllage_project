@@ -9,12 +9,12 @@ var orderSchema = new mongoose.Schema(
       require:true
     },
     shippingInfo:{
-      firstName:{
+      firstname:{
         type:String,
         required:true,
 
       },
-      lastName:{
+      lastname:{
         type:String,
         required:true,
       },
@@ -34,7 +34,7 @@ var orderSchema = new mongoose.Schema(
         type:String,
         required:true
       },
-      Pincode:{
+      pincode:{
         type:Number,
         required:true,
       }
@@ -50,7 +50,7 @@ var orderSchema = new mongoose.Schema(
         required:true
       },
     },
-    orderItem:[
+    orderItems:[
       {
           product:{
             type:mongoose.Schema.Types.ObjectId,
@@ -63,7 +63,7 @@ var orderSchema = new mongoose.Schema(
             ref:"Color",
             require:true
           },
-          Quantity:{
+          quantity:{
             type:Number,
             require:true
           },
@@ -77,6 +77,10 @@ var orderSchema = new mongoose.Schema(
       type:Date,
       default:Date.now()
 
+    },
+    month:{
+       type:String,
+       default:new Date().getMonth()
     },
     totalPrice:{
       type:Number,

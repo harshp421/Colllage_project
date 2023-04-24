@@ -21,6 +21,10 @@ import TermAndContions from "./pages/TermAndContions";
 import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import { PrivateRoute } from "./routing/PrivateRoute";
+import { OpenRoute } from "./routing/OpenRoute";
+import Orders from "./pages/Orders";
+import Profile from "./pages/Profile";
 function App() {
   return (
     <>
@@ -34,14 +38,16 @@ function App() {
             <Route path="product/:id" element={<SingleProduct />} />
             <Route path="blogs" element={<Blog />} />
             <Route path="blog/:id" element={<SingleBlog />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="checkout" element={<Checkout />} />
+            <Route path="cart" element={   <PrivateRoute>  <Cart /> </PrivateRoute>  } />
+            <Route path="my-orders" element={   <PrivateRoute>  <Orders /> </PrivateRoute>  } />
+            <Route path="my-profile" element={   <PrivateRoute>  <Profile /> </PrivateRoute>  } />
+            <Route path="checkout" element={ <PrivateRoute> <Checkout /></PrivateRoute>} />
             <Route path="compare-product" element={<CompareProduct />} />
-            <Route path="wishlist" element={<Wishlist />} />
-            <Route path="login" element={<Login />} />
+            <Route path="wishlist" element={<PrivateRoute>  <Wishlist /></PrivateRoute>} />
+            <Route path="login" element={<OpenRoute> <Login /></OpenRoute>} />
             <Route path="forgot-password" element={<Forgotpassword />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="reset-password" element={<Resetpassword />} />
+            <Route path="signup" element={<OpenRoute><Signup /></OpenRoute> } />
+            <Route path="reset-password/:token" element={<Resetpassword />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="refund-policy" element={<RefundPloicy />} />
             <Route path="shipping-policy" element={<ShippingPolicy />} />

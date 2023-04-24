@@ -8,7 +8,7 @@ const SpecialProduct = ({ item }) => {
     <>
       <div className="col-6 mb-3">
         <div className="special-product-card">
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between overflow-hidden " style={{height:"380px"}}>
             <div className="col-5">
               <img src={images[1].url} className="img-fluid" alt="watch" />
             </div>
@@ -23,8 +23,8 @@ const SpecialProduct = ({ item }) => {
                 activeColor="#ffd700"
               />
               <p className="price">
-                <span className="red-p">{price}</span> &nbsp;{" "}
-                <strike>$200</strike>
+                <span className="red-p">₹{price}</span> &nbsp;{" "}
+                <strike>₹1000</strike>
               </p>
               <div className="discount-till d-flex align-items-center gap-10">
                 <p className="mb-0">

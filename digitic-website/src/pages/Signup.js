@@ -1,18 +1,24 @@
 import React from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { registeuser } from "../features/user/userSlice";
+import { registeuser, resetState } from "../features/user/userSlice";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const Signup = () => {
     const dispatch =useDispatch();   
+    const navigate=useNavigate();
+  const  authState=useSelector((state)=>state?.auth)
 
+
+
+  console.log(authState,"auth state");
   let signupSchema = yup.object({
     firstname: yup.string().required("**First name is required "),
     lastname: yup.string().required("**Last Name is required"),
@@ -32,9 +38,21 @@ const Signup = () => {
     validationSchema: signupSchema,
     onSubmit: (values) => {
        dispatch(registeuser(values));
-       toast.success("hello");
+
+      
+     
     },
   });
+  
+  
+ useEffect(()=>{
+         if(authState?.createdUser != null  && authState.isError === false)
+    {
+            navigate('/login');
+            dispatch(resetState()); 
+    }
+     },[authState])
+
   return (
     <>
       <Meta title={"Sign Up"} />
@@ -55,7 +73,7 @@ const Signup = () => {
                   placeholder="First Name"
                   value={formik.values.firstname}
                   onChange={formik.handleChange("firstname")}
-                  onBlur={formik.handleBlur("first name")}
+                  onBlur={formik.handleBlur("firstname")}
                 />
                 <div className="error">
                   {formik.touched.firstname && formik.errors.firstname}

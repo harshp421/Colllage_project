@@ -144,8 +144,10 @@ const addToWishlist = asyncHandler(async (req, res) => {
 const rating = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { star, prodId, comment } = req.body;
+
   try {
     const product = await Product.findById(prodId);
+    const user=await User.findById(_id);
     let alreadyRated = product.ratings.find(
       (userId) => userId.postedby.toString() === _id.toString()
     );
@@ -155,7 +157,7 @@ const rating = asyncHandler(async (req, res) => {
           ratings: { $elemMatch: alreadyRated },
         },
         {
-          $set: { "ratings.$.star": star, "ratings.$.comment": comment },
+          $set: { "ratings.$.star": star, "ratings.$.comment": comment ,"ratings.$.user":user.firstname},
         },
         {
           new: true,
@@ -170,6 +172,7 @@ const rating = asyncHandler(async (req, res) => {
               star: star,
               comment: comment,
               postedby: _id,
+              user:user.firstname
             },
           },
         },

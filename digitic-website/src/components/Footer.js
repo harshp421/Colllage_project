@@ -38,20 +38,19 @@ const Footer = () => {
               <h4 className="text-white mb-4">Contact Us</h4>
               <div>
                 <address className="text-white fs-6">
-                  Hno : 277 Near Vill chopal, <br /> Sonipat, Haryana <br />
-                  PinCode: 131103
+                Sarvoday Nager, Khokhra, Ahmedabad, <br /> Gujarat 380026
                 </address>
                 <a
-                  href="tel:+91 8264954234"
+                  href="tel:+91 9537128189"
                   className="mt-3 d-block mb-1 text-white"
                 >
-                  +91 8264954234
+                  +91 9537128189
                 </a>
                 <a
                   href="mailto:navdeepdahiya753@gmail.com"
                   className="mt-2 d-block mb-0 text-white"
                 >
-                  navdeepdahiya753@gmail.com
+                  harshparmar0421@gmail.com
                 </a>
                 <div className="social_icons d-flex align-items-center gap-30 mt-4">
                   <a className="text-white" href="#">
@@ -98,11 +97,11 @@ const Footer = () => {
             <div className="col-2">
               <h4 className="text-white mb-4">Quick Links</h4>
               <div className="footer-link d-flex flex-column">
-                <Link className="text-white py-2 mb-1">Laptops</Link>
-                <Link className="text-white py-2 mb-1">Headphones</Link>
-                <Link className="text-white py-2 mb-1">Tablets</Link>
-                <Link className="text-white py-2 mb-1">Watch</Link>
-              </div>
+                <Link className="text-white py-2 mb-1" to={'/product'}>Jeans</Link>
+                <Link className="text-white py-2 mb-1" to={'/product'}>Tops</Link>
+                <Link className="text-white py-2 mb-1" to={'/product'}>Shirt</Link>
+                <Link className="text-white py-2 mb-1 " to={'/product'}>T-Shirt</Link>
+            </div>
             </div>
           </div>
         </div>
@@ -112,7 +111,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-12">
               <p className="text-center mb-0 text-white">
-                &copy; {new Date().getFullYear()}; Powered by Developer's Corner
+                &copy; {new Date().getFullYear()}:   Powered by Harsh parmar
               </p>
             </div>
           </div>

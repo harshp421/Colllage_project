@@ -14,12 +14,25 @@ import {
 import SingleCart from "../components/SingleCart";
 
 const Cart = () => {
+
+  const getTokenFromLocalStorage = localStorage.getItem("customer")
+  ? JSON.parse(localStorage.getItem("customer"))
+  : null;
+
+const config2 = {
+  headers: {
+    Authorization: `Bearer ${
+      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+    }`,
+    Accept: "application/json",
+  },
+};
   const dispatch = useDispatch();
   const userCartstate = useSelector((state) => state?.auth?.cartProducts);
   const [totalamount, setTotalAmount] = useState(null);
 
   useEffect(() => {
-    dispatch(getUserCart());
+    dispatch(getUserCart(config2));
   }, []);
 
   useEffect(() => {
@@ -34,10 +47,10 @@ const Cart = () => {
   }, [userCartstate]);
 
   const DeleteCartProducts = (id) => {
-    dispatch(DeleteCartProduct({ cartItemId: id }));
+    dispatch(DeleteCartProduct({ cartItemId: id ,config2:config2}));
 
     setTimeout(() => {
-      dispatch(getUserCart());
+      dispatch(getUserCart(config2));
     }, 300);
   };
 

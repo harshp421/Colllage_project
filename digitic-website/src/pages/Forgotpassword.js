@@ -4,7 +4,32 @@ import Meta from "../components/Meta";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { forgotPasswordToken } from "../features/user/userSlice";
 const Forgotpassword = () => {
+
+  const dispatch=useDispatch();
+
+  let signupSchema = yup.object({
+   
+    email: yup.string().required("**email is required"),
+  
+  });
+
+  const formik = useFormik({
+    initialValues: {
+   
+      email: "",
+    
+    },
+    validationSchema: signupSchema,
+    onSubmit: (values) => {
+       dispatch(forgotPasswordToken(values));
+    },
+  });
+
   return (
     <>
       <Meta title={"Forgot Password"} />
@@ -17,9 +42,15 @@ const Forgotpassword = () => {
               <p className="text-center mt-2 mb-3">
                 We will send you an email to reset your password
               </p>
-              <form action="" className="d-flex flex-column gap-15">
-                <CustomInput type="email" name="email" placeholder="Email" />
-
+              <form action=""  onSubmit={formik.handleSubmit} className="d-flex flex-column gap-15">
+                <CustomInput type="email" name="email" placeholder="Email"
+                   value={formik.values.email}
+                   onChange={formik.handleChange("email")}
+                   onBlur={formik.handleBlur("email")}
+                />
+                <div className="error">
+                  {formik.touched.email && formik.errors.email}
+                </div>
                 <div>
                   <div className="mt-3 d-flex justify-content-center flex-column gap-15 align-items-center">
                     <button className="button border-0" type="submit">

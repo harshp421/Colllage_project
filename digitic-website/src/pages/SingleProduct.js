@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
@@ -11,29 +11,96 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import watch from "../images/watch.jpg";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getAProduct } from "../features/products/productSlice";
+import { addRating, getAProduct, getAllProducts } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addProductToCart, getUserCart } from "../features/user/userSlice";
 const SingleProduct = () => {
+  
   const navigate = useNavigate();
   const [color, setColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [alreadyAdded, setAlreadyAdded] = useState(false);
+  const [popularProduct, setPopularProduct] = useState([]);
+  //const [productState, setproductState] = useState({})
+  const productState = useSelector((state) => state?.product?.singleproduct);
+  const productsState = useSelector((state) => state?.product?.product);
+  const cartState = useSelector((state) => state?.auth?.cartProducts);
+  const   user = useSelector((state) => state?.auth?.user);
+  
+ const [star, setStar] = useState(null);
+ const [comment, setComment] = useState(null);
+
+  
   const param = useParams();
   console.log(quantity, "id");
   const dispatch = useDispatch();
-  const productState = useSelector((state) => state.product.singleproduct);
-  const cartState = useSelector((state) => state?.auth?.cartProducts);
 
-  console.log(cartState, "cart product");
+  
+
+  console.log(user, "cart user product");  
+  const getTokenFromLocalStorage = localStorage.getItem("customer")
+  ? JSON.parse(localStorage.getItem("customer"))
+  : null;
+
+const config3 = {
+  headers: {
+    Authorization: `Bearer ${
+      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+    }`,
+    Accept: "application/json",
+  },
+};
+
+
 
   useEffect(() => {
     dispatch(getAProduct(param.id));
+    dispatch(getUserCart(config3))
+    dispatch(getAllProducts())
+  
+    
   }, []);
 
+
+  // store the previous productState to compare with the current value in the next render
+  useEffect(() => {
+    // check if the productState has changed before dispatching the action again
+    if (productState?.reviews?.length !== previousProductState?.reviews?.length) {
+      dispatch(getAProduct(param.id));
+    }
+  }, [productState]);
+const previousProductState = usePrevious(productState);
+
+// a custom hook to get the previous value of a state
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+}
+
   // useEffect(() => {
-  //   dispatch(getUserCart());
-  // }, []);
+  //   dispatch(getAProduct(param.id));
+  // }, [ productState]);
+
+
+    useEffect(() => {
+     
+      let data=[];
+      for (let index = 0; index < productsState.length; index++) {
+        const element = productsState[index];
+        if(element.tags === "popular")
+        {
+          data.push(element);
+        }
+        setPopularProduct(data)
+
+      }
+
+    }, [productsState])
+    
+
 
   useEffect(() => {
     for (let index = 0; index < cartState?.length; index++) {
@@ -45,10 +112,18 @@ const SingleProduct = () => {
   }, [alreadyAdded]);
 
   const uploadCart = () => {
-    if (color === null) {
+   
+     if(user === null)
+    {
+      toast.success("Please Login first")
+      navigate("/login");
+
+    }
+    else if (color === null) {
       toast.error("Please Choes color");
       return false;
-    } else {
+    } 
+    else {
       console.log(color, "color");
       dispatch(
         addProductToCart({
@@ -58,7 +133,7 @@ const SingleProduct = () => {
           price: productState?.price,
         })
       );
-      dispatch(getUserCart());
+      dispatch(getUserCart(config3));
     }
   };
 
@@ -66,8 +141,8 @@ const SingleProduct = () => {
     width: 600,
     height: 600,
     zoomWidth: 600,
-    img: productState?.images[0]?.url
-      ? productState?.images[0]?.url
+    img: productState?.images[1]?.url
+      ? productState?.images[1]?.url
       : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
   };
 
@@ -82,6 +157,27 @@ const SingleProduct = () => {
     textField.remove();
   };
   const closeModal = () => {};
+
+
+ const addRatingToProduct=(e)=>{
+
+  console.log(star,comment,"comment");
+  e.preventDefault();
+  if(star === null)
+  {
+    toast.error("Please add Star Rating");
+    return false;
+  }
+  else if(comment === null)
+  {
+    toast.error("Please add Review About Product");
+    return false;
+  }else{
+    dispatch(addRating({star:star,comment:comment,prodId:param.id,config3:config3}))
+    dispatch(getAProduct(param.id));
+
+  }
+ }
   return (
     <>
       <Meta title={"Product Name"} />
@@ -95,34 +191,22 @@ const SingleProduct = () => {
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
-              <div>
+             
+             {
+              productState?.images?.map((item)=>{
+                return(
+                  <div>
                 <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
+                  src={item?.url}
                   className="img-fluid"
                   alt=""
                 />
               </div>
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
+                )
+              })
+             }
+              
+             
             </div>
           </div>
           <div className="col-6">
@@ -131,7 +215,7 @@ const SingleProduct = () => {
                 <h3 className="title">{productState?.title}</h3>
               </div>
               <div className="border-bottom py-3">
-                <p className="price">${productState?.price}</p>
+                <p className="price">₹{productState?.price}</p>
                 <div className="d-flex align-items-center gap-10">
                   <ReactStars
                     count={5}
@@ -314,7 +398,7 @@ const SingleProduct = () => {
               </div>
               <div className="review-form py-4">
                 <h4>Write a Review</h4>
-                <form action="" className="d-flex flex-column gap-15">
+                <form action="" onSubmit={(e)=>addRatingToProduct(e)} className="d-flex flex-column gap-15">
                   <div>
                     <ReactStars
                       count={5}
@@ -322,6 +406,9 @@ const SingleProduct = () => {
                       value={4}
                       edit={true}
                       activeColor="#ffd700"
+                      onChange={(e)=>{
+                        setStar(e)
+                      }}
                     />
                   </div>
                   <div>
@@ -332,33 +419,39 @@ const SingleProduct = () => {
                       cols="30"
                       rows="4"
                       placeholder="Comments"
+                      onChange={(e)=>{
+                        setComment(e.target.value)
+                      }}
                     ></textarea>
                   </div>
                   <div className="d-flex justify-content-end">
-                    <button className="button border-0">Submit Review</button>
+                    <button className="button border-0" type="submit">Submit Review</button>
                   </div>
                 </form>
               </div>
               <div className="reviews mt-4">
-                <div className="review">
-                  <div className="d-flex gap-10 align-items-center">
-                    <h6 className="mb-0">harsh</h6>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={4}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                  </div>
-                  <p className="mt-3">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Consectetur fugit ut excepturi quos. Id reprehenderit
-                    voluptatem placeat consequatur suscipit ex. Accusamus dolore
-                    quisquam deserunt voluptate, sit magni perspiciatis quas
-                    iste?
-                  </p>
-                </div>
+               {
+                productState && productState.ratings?.map((item,index)=>{
+                    return(
+                      <div className="review" key={index}>
+                      <div className="d-flex gap-10 align-items-center">
+                        <h6 className="mb-0">{item?.user}</h6>
+                        <ReactStars
+                          count={5}
+                          size={24}
+                          value={item?.star}
+                          edit={false}
+                          activeColor="#ffd700"
+                    
+                        />
+                      </div>
+                      <p className="mt-3">
+                       {item?.comment}
+                      </p>
+                    </div>
+                    )
+                })
+               }
               </div>
             </div>
           </div>
@@ -371,11 +464,11 @@ const SingleProduct = () => {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
+          <ProductCard  data={popularProduct}/>
         </div>
       </Container>
 
-      <div
+      {/* <div
         className="modal fade"
         id="staticBackdrop"
         data-bs-backdrop="static"
@@ -428,7 +521,7 @@ const SingleProduct = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
