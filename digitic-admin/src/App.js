@@ -26,6 +26,7 @@ import ViewEnq from "./pages/ViewEnq";
 import ViewOrder from "./pages/ViewOrder";
 import { PrivateRoute } from "./routing/PrivateRoute";
 import { OpenRoute } from "./routing/OpenRoute";
+
 function App() {
   return (
     <Router>

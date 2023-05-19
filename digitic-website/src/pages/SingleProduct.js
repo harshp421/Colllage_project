@@ -11,11 +11,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import watch from "../images/watch.jpg";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { addRating, getAProduct, getAllProducts } from "../features/products/productSlice";
+import {
+  addRating,
+  getAProduct,
+  getAllProducts,
+} from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addProductToCart, getUserCart } from "../features/user/userSlice";
 const SingleProduct = () => {
-  
   const navigate = useNavigate();
   const [color, setColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -25,82 +28,69 @@ const SingleProduct = () => {
   const productState = useSelector((state) => state?.product?.singleproduct);
   const productsState = useSelector((state) => state?.product?.product);
   const cartState = useSelector((state) => state?.auth?.cartProducts);
-  const   user = useSelector((state) => state?.auth?.user);
-  
- const [star, setStar] = useState(null);
- const [comment, setComment] = useState(null);
+  const user = useSelector((state) => state?.auth?.user);
 
-  
+  const [star, setStar] = useState(null);
+  const [comment, setComment] = useState(null);
+
   const param = useParams();
   console.log(quantity, "id");
   const dispatch = useDispatch();
 
-  
-
-  console.log(user, "cart user product");  
+  console.log(user, "cart user product");
   const getTokenFromLocalStorage = localStorage.getItem("customer")
-  ? JSON.parse(localStorage.getItem("customer"))
-  : null;
+    ? JSON.parse(localStorage.getItem("customer"))
+    : null;
 
-const config3 = {
-  headers: {
-    Authorization: `Bearer ${
-      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
-    }`,
-    Accept: "application/json",
-  },
-};
-
-
+  const config3 = {
+    headers: {
+      Authorization: `Bearer ${
+        getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+      }`,
+      Accept: "application/json",
+    },
+  };
 
   useEffect(() => {
     dispatch(getAProduct(param.id));
-    dispatch(getUserCart(config3))
-    dispatch(getAllProducts())
-  
-    
+    dispatch(getUserCart(config3));
+    dispatch(getAllProducts());
   }, []);
-
 
   // store the previous productState to compare with the current value in the next render
   useEffect(() => {
     // check if the productState has changed before dispatching the action again
-    if (productState?.reviews?.length !== previousProductState?.reviews?.length) {
+    if (
+      productState?.reviews?.length !== previousProductState?.reviews?.length
+    ) {
       dispatch(getAProduct(param.id));
     }
   }, [productState]);
-const previousProductState = usePrevious(productState);
+  const previousProductState = usePrevious(productState);
 
-// a custom hook to get the previous value of a state
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
-}
+  // a custom hook to get the previous value of a state
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+    return ref.current;
+  }
 
   // useEffect(() => {
   //   dispatch(getAProduct(param.id));
   // }, [ productState]);
 
-
-    useEffect(() => {
-     
-      let data=[];
-      for (let index = 0; index < productsState.length; index++) {
-        const element = productsState[index];
-        if(element.tags === "popular")
-        {
-          data.push(element);
-        }
-        setPopularProduct(data)
-
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < productsState.length; index++) {
+      const element = productsState[index];
+      if (element.tags === "popular") {
+        data.push(element);
       }
-
-    }, [productsState])
-    
-
+      setPopularProduct(data);
+    }
+  }, [productsState]);
 
   useEffect(() => {
     for (let index = 0; index < cartState?.length; index++) {
@@ -112,18 +102,13 @@ function usePrevious(value) {
   }, [alreadyAdded]);
 
   const uploadCart = () => {
-   
-     if(user === null)
-    {
-      toast.success("Please Login first")
+    if (user === null) {
+      toast.success("Please Login first");
       navigate("/login");
-
-    }
-    else if (color === null) {
+    } else if (color === null) {
       toast.error("Please Choes color");
       return false;
-    } 
-    else {
+    } else {
       console.log(color, "color");
       dispatch(
         addProductToCart({
@@ -158,26 +143,27 @@ function usePrevious(value) {
   };
   const closeModal = () => {};
 
-
- const addRatingToProduct=(e)=>{
-
-  console.log(star,comment,"comment");
-  e.preventDefault();
-  if(star === null)
-  {
-    toast.error("Please add Star Rating");
-    return false;
-  }
-  else if(comment === null)
-  {
-    toast.error("Please add Review About Product");
-    return false;
-  }else{
-    dispatch(addRating({star:star,comment:comment,prodId:param.id,config3:config3}))
-    dispatch(getAProduct(param.id));
-
-  }
- }
+  const addRatingToProduct = (e) => {
+    console.log(star, comment, "comment");
+    e.preventDefault();
+    if (star === null) {
+      toast.error("Please add Star Rating");
+      return false;
+    } else if (comment === null) {
+      toast.error("Please add Review About Product");
+      return false;
+    } else {
+      dispatch(
+        addRating({
+          star: star,
+          comment: comment,
+          prodId: param.id,
+          config3: config3,
+        })
+      );
+      dispatch(getAProduct(param.id));
+    }
+  };
   return (
     <>
       <Meta title={"Product Name"} />
@@ -191,22 +177,13 @@ function usePrevious(value) {
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
-             
-             {
-              productState?.images?.map((item)=>{
-                return(
+              {productState?.images?.map((item) => {
+                return (
                   <div>
-                <img
-                  src={item?.url}
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-                )
-              })
-             }
-              
-             
+                    <img src={item?.url} className="img-fluid" alt="" />
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="col-6">
@@ -249,7 +226,9 @@ function usePrevious(value) {
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Availablity :</h3>
-                  <p className="product-data">In Stock</p>
+                  <p className="product-data">
+                    {productState?.quantity === 0 ? "Out of stock" : "In Stock"}{" "}
+                  </p>
                 </div>
                 <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Size :</h3>
@@ -288,8 +267,9 @@ function usePrevious(value) {
                         <input
                           type="number"
                           name=""
-                          min={1}
-                          max={10}
+                          disabled={productState?.quantity === 0 && true}
+                          min={productState?.quantity === 0 && 0}
+                          max={productState?.quantity}
                           className="form-control"
                           style={{ width: "70px" }}
                           id=""
@@ -305,18 +285,24 @@ function usePrevious(value) {
                       alreadyAdded ? "ms-0" : "ms-5"
                     }d-flex align-items-center gap-30 ms-5`}
                   >
-                    <button
-                      className="button border-0"
-                      type="button"
-                      onClick={() => {
-                        alreadyAdded === true
-                          ? navigate("/cart")
-                          : uploadCart();
-                      }}
-                    >
-                      {alreadyAdded === true ? "Go to cart" : "Add to cart"}
-                    </button>
-                    <button className="button signup">Buy It Now</button>
+                    {productState?.quantity === 0 ? (
+                      "Out of stock"
+                    ) : (
+                      <>
+                        <button
+                          className="button border-0"
+                          type="button"
+                          onClick={() => {
+                            alreadyAdded === true
+                              ? navigate("/cart")
+                              : uploadCart();
+                          }}
+                        >
+                          {alreadyAdded === true ? "Go to cart" : "Add to cart"}
+                        </button>
+                        <button className="button signup">Buy It Now</button>
+                      </>
+                    )}{" "}
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
@@ -398,7 +384,11 @@ function usePrevious(value) {
               </div>
               <div className="review-form py-4">
                 <h4>Write a Review</h4>
-                <form action="" onSubmit={(e)=>addRatingToProduct(e)} className="d-flex flex-column gap-15">
+                <form
+                  action=""
+                  onSubmit={(e) => addRatingToProduct(e)}
+                  className="d-flex flex-column gap-15"
+                >
                   <div>
                     <ReactStars
                       count={5}
@@ -406,8 +396,8 @@ function usePrevious(value) {
                       value={4}
                       edit={true}
                       activeColor="#ffd700"
-                      onChange={(e)=>{
-                        setStar(e)
+                      onChange={(e) => {
+                        setStar(e);
                       }}
                     />
                   </div>
@@ -419,39 +409,37 @@ function usePrevious(value) {
                       cols="30"
                       rows="4"
                       placeholder="Comments"
-                      onChange={(e)=>{
-                        setComment(e.target.value)
+                      onChange={(e) => {
+                        setComment(e.target.value);
                       }}
                     ></textarea>
                   </div>
                   <div className="d-flex justify-content-end">
-                    <button className="button border-0" type="submit">Submit Review</button>
+                    <button className="button border-0" type="submit">
+                      Submit Review
+                    </button>
                   </div>
                 </form>
               </div>
               <div className="reviews mt-4">
-               {
-                productState && productState.ratings?.map((item,index)=>{
-                    return(
+                {productState &&
+                  productState.ratings?.map((item, index) => {
+                    return (
                       <div className="review" key={index}>
-                      <div className="d-flex gap-10 align-items-center">
-                        <h6 className="mb-0">{item?.user}</h6>
-                        <ReactStars
-                          count={5}
-                          size={24}
-                          value={item?.star}
-                          edit={false}
-                          activeColor="#ffd700"
-                    
-                        />
+                        <div className="d-flex gap-10 align-items-center">
+                          <h6 className="mb-0">{item?.user}</h6>
+                          <ReactStars
+                            count={5}
+                            size={24}
+                            value={item?.star}
+                            edit={false}
+                            activeColor="#ffd700"
+                          />
+                        </div>
+                        <p className="mt-3">{item?.comment}</p>
                       </div>
-                      <p className="mt-3">
-                       {item?.comment}
-                      </p>
-                    </div>
-                    )
-                })
-               }
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -464,7 +452,7 @@ function usePrevious(value) {
           </div>
         </div>
         <div className="row">
-          <ProductCard  data={popularProduct}/>
+          <ProductCard data={popularProduct} />
         </div>
       </Container>
 

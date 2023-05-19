@@ -19,6 +19,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
+
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -39,7 +40,7 @@ const MainLayout = () => {
           mode="inline"
           defaultSelectedKeys={[""]}
           onClick={({ key }) => {
-            if (key == "signout") {
+            if (key === "signout") {
             } else {
               navigate(key);
             }
@@ -159,6 +160,7 @@ const MainLayout = () => {
           ]}
         />
       </Sider>
+      
       <Layout className="site-layout">
         <Header
           className="d-flex justify-content-between ps-1 pe-5"

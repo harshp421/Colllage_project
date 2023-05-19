@@ -7,52 +7,56 @@ import Color from "../components/Color";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
+import ReactPaginate from "react-paginate";
 
 const OurStore = () => {
   const [grid, setGrid] = useState(4);
   const [brands, setBrand] = useState([]);
   const [categories, setCategories] = useState([]);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(3);
+  const paginate = ({ selected }) => {
+    setCurrentPage(selected + 1);
+  };
   const [tags, setTage] = useState([]);
   const [minPrice, setminPrice] = useState(null);
   const [maxPrice, setmaxPrice] = useState(null);
 
-
   // filter
   const [category, setCategory] = useState(null);
   const [tag, setTag] = useState(null);
-  const [sort, setSort] = useState(null)
+  const [sort, setSort] = useState(null);
   const [brand, setbrand] = useState(null);
- 
+
   const productState = useSelector((state) => state?.product?.product);
   console.log(productState, "stata of product");
   const dispatch = useDispatch();
 
   const getProducts = () => {
-    dispatch(getAllProducts({sort,tag,brand,category,minPrice,maxPrice}));
+    dispatch(
+      getAllProducts({ sort, tag, brand, category, minPrice, maxPrice })
+    );
   };
   useEffect(() => {
     getProducts();
-  }, [sort,tag,brand,category,minPrice,maxPrice]);
+  }, [sort, tag, brand, category, minPrice, maxPrice]);
 
   useEffect(() => {
-    let newBrand=[];
-    let categories=[];
-    let newTage=[];
-     
-     for (let index = 0; index < productState?.length; index++) {
-       const element = productState[index];
-       newBrand.push(element.brand);
-       categories.push(element.category);
-      newTage.push(element.tags);  
-     }
- 
-     setBrand(newBrand);
-     setCategories(categories);
-     setTage(newTage)
-  }, [productState])
-  
- 
+    let newBrand = [];
+    let categories = [];
+    let newTage = [];
+
+    for (let index = 0; index < productState?.length; index++) {
+      const element = productState[index];
+      newBrand.push(element.brand);
+      categories.push(element.category);
+      newTage.push(element.tags);
+    }
+
+    setBrand(newBrand);
+    setCategories(categories);
+    setTage(newTage);
+  }, [productState]);
 
   return (
     <>
@@ -65,15 +69,19 @@ const OurStore = () => {
               <h3 className="filter-title">Shop By Categories</h3>
               <div>
                 <ul className="ps-0">
-                 {
-                  categories && [...new Set(categories)].map((item,index)=>{
-                    return <li key={index} onClick={()=>{setCategory(item)}}>
-                      {item}
-                    </li>
-                  })
-                 }
-                  
-                 
+                  {categories &&
+                    [...new Set(categories)].map((item, index) => {
+                      return (
+                        <li
+                          key={index}
+                          onClick={() => {
+                            setCategory(item);
+                          }}
+                        >
+                          {item}
+                        </li>
+                      );
+                    })}
                 </ul>
               </div>
             </div>
@@ -113,7 +121,7 @@ const OurStore = () => {
                       className="form-control"
                       id="floatingInput"
                       placeholder="From"
-                      onChange={(e)=>setminPrice(e.target.value)}
+                      onChange={(e) => setminPrice(e.target.value)}
                     />
                     <label htmlFor="floatingInput">From</label>
                   </div>
@@ -123,8 +131,7 @@ const OurStore = () => {
                       className="form-control"
                       id="floatingInput1"
                       placeholder="To"
-                      onChange={(e)=>setmaxPrice(e.target.value)}
-
+                      onChange={(e) => setmaxPrice(e.target.value)}
                     />
                     <label htmlFor="floatingInput1">To</label>
                   </div>
@@ -164,17 +171,18 @@ const OurStore = () => {
               <h3 className="filter-title">Product Tags</h3>
               <div>
                 <div className="product-tags d-flex flex-wrap align-items-center gap-10">
-
-                {
-                  tags && [...new Set(tags)].map((item,index)=>{
-                    return (
-                      <span onClick={()=>setTag(item)}  key={index} className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                     {item}
-                    </span>
-                    )
-                  })
-                 }
-               
+                  {tags &&
+                    [...new Set(tags)].map((item, index) => {
+                      return (
+                        <span
+                          onClick={() => setTag(item)}
+                          key={index}
+                          className="badge bg-light text-secondary rounded-3 py-2 px-3"
+                        >
+                          {item}
+                        </span>
+                      );
+                    })}
                 </div>
               </div>
             </div>
@@ -182,17 +190,18 @@ const OurStore = () => {
               <h3 className="filter-title">Product Brands</h3>
               <div>
                 <div className="product-tags d-flex flex-wrap align-items-center gap-10">
-
-                {
-                  brands && [...new Set(brands)].map((item,index)=>{
-                    return (
-                      <span onClick={()=>setbrand(item)}  key={index} className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                     {item}
-                    </span>
-                    )
-                  })
-                 }
-               
+                  {brands &&
+                    [...new Set(brands)].map((item, index) => {
+                      return (
+                        <span
+                          onClick={() => setbrand(item)}
+                          key={index}
+                          className="badge bg-light text-secondary rounded-3 py-2 px-3"
+                        >
+                          {item}
+                        </span>
+                      );
+                    })}
                 </div>
               </div>
             </div>
@@ -258,13 +267,10 @@ const OurStore = () => {
                     defaultValue={"manula"}
                     className="form-control form-select"
                     id=""
-                    onChange={(e)=>setSort(e.target.value)}
+                    onChange={(e) => setSort(e.target.value)}
                   >
-                 
                     <option value="title">Alphabetically, A-Z</option>
-                    <option value="-title">
-                      Alphabetically, Z-A
-                    </option>
+                    <option value="-title">Alphabetically, Z-A</option>
                     <option value="price">Price, low to high</option>
                     <option value="-price">Price, high to low</option>
                     <option value="createdAt">Date, old to new</option>
@@ -316,6 +322,17 @@ const OurStore = () => {
                 <ProductCard data={productState} grid={grid} />
               </div>
             </div>
+            <ReactPaginate
+              onPageChange={paginate}
+              pageCount={Math.ceil(productState.length / postsPerPage)}
+              previousLabel={"Prev"}
+              nextLabel={"Next"}
+              containerClassName={"pagination"}
+              pageLinkClassName={"page-number"}
+              previousLinkClassName={"page-number"}
+              nextLinkClassName={"page-number"}
+              activeLinkClassName={"active"}
+            />
           </div>
         </div>
       </Container>

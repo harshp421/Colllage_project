@@ -15,14 +15,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllBlogs } from "../features/blogs/blogeSlice";
 import moment from "moment";
 import {
+  addToCompare,
   addToWishList,
   getAllProducts,
 } from "../features/products/productSlice";
 import addcart from "../images/add-cart.svg";
 import wish from "../images/wish.svg";
 import view from "../images/view.svg";
-
-
+import { toast } from "react-toastify";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -36,6 +36,7 @@ const Home = () => {
   }, []);
   const addToWish = (id) => {
     dispatch(addToWishList(id));
+    toast.success("Product Added successfully");
   };
   const getAll = () => {
     dispatch(getAllBlogs());
@@ -51,7 +52,6 @@ const Home = () => {
               <img
                 src="https://images.pexels.com/photos/1040424/pexels-photo-1040424.jpeg?auto=compress&cs=tinysrgb&w=1600"
                 className="img-fluid rounded-3 h-50"
-               
                 alt="main banner"
               />
               <div className="main-banner-content position-absolute">
@@ -112,7 +112,6 @@ const Home = () => {
                   <p>From 400 or 1500.</p>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>
@@ -189,7 +188,9 @@ const Home = () => {
             <div className="categories d-flex justify-content-between flex-wrap align-items-center">
               <div className="d-flex gap align-items-center">
                 <div>
-                  <h6><Link to={'/product'} > Man's t-shirt</Link></h6>
+                  <h6>
+                    <Link to={"/product"}> Man's t-shirt</Link>
+                  </h6>
                   <p>10 Items</p>
                 </div>
                 <div className="w-24">
@@ -197,13 +198,15 @@ const Home = () => {
                     src="https://cdna.lystit.com/photos/717e-2014/01/30/nike--futura-logo-t-shirt-product-1-16964995-0-335918059-normal.jpeg"
                     alt="camera"
                     className="img-fluide "
-                    style={{ width: "110px" ,height:"110px"}}
+                    style={{ width: "110px", height: "110px" }}
                   />{" "}
                 </div>
               </div>
               <div className="d-flex gap align-items-center">
                 <div>
-                <h6><Link to={'/product'} > Man's shirt</Link></h6>
+                  <h6>
+                    <Link to={"/product"}> Man's shirt</Link>
+                  </h6>
                   <p>10 Items</p>
                 </div>
                 <div className="w-24">
@@ -211,13 +214,15 @@ const Home = () => {
                     src="https://imgs.search.brave.com/nP2-D-o-MIrCjW0tL5pwZ0730YYSbBK9gdgzJyH74-U/rs:fit:534:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5F/WXBXM3hMUXpwNkl4/NVd5UDJPbEtBSGFH/ayZwaWQ9QXBp"
                     alt="camera"
                     className="img-fluide "
-                    style={{ width: "110px" ,height:"110px"}}
+                    style={{ width: "110px", height: "110px" }}
                   />
                 </div>
               </div>
               <div className="d-flex gap align-items-center">
                 <div>
-                <h6><Link to={'/product'} > Woman's t-shirt</Link></h6>
+                  <h6>
+                    <Link to={"/product"}> Woman's t-shirt</Link>
+                  </h6>
                   <p>10 Items</p>
                 </div>
                 <div className="w-24">
@@ -225,13 +230,15 @@ const Home = () => {
                     src="https://imgs.search.brave.com/rApZ-Wegkwi1LPXMvTiFr9rtFenG6OAmMxjKRPvWUfg/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5F/TV9JalJ5M0hrc1I0/eUpQeFJFVk5RSGFI/YSZwaWQ9QXBp"
                     alt="camera"
                     className="img-fluide "
-                    style={{ width: "110px" ,height:"110px"}}
+                    style={{ width: "110px", height: "110px" }}
                   />{" "}
                 </div>
               </div>
               <div className="d-flex gap align-items-center">
                 <div>
-                <h6><Link to={'/product'} > cap's</Link></h6>
+                  <h6>
+                    <Link to={"/product"}> cap's</Link>
+                  </h6>
 
                   <p>10 Items</p>
                 </div>
@@ -240,13 +247,15 @@ const Home = () => {
                     src="https://imgs.search.brave.com/ni-jMYwhB_l2CSnwgtBJl_0etAwaYAxNsvDknfxJdu8/rs:fit:592:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5k/YUpWUldsTDNBXzNL/QmlsU21Ic1pRSGFG/NyZwaWQ9QXBp"
                     alt="camera"
                     className="img-fluide "
-                    style={{ width: "110px" ,height:"110px"}}
+                    style={{ width: "110px", height: "110px" }}
                   />{" "}
                 </div>
               </div>
               <div className="d-flex gap align-items-center">
                 <div>
-                <h6><Link to={'/product'} > men's hoodies</Link></h6>
+                  <h6>
+                    <Link to={"/product"}> men's hoodies</Link>
+                  </h6>
 
                   <p>10 Items</p>
                 </div>
@@ -255,13 +264,15 @@ const Home = () => {
                     src="https://imgs.search.brave.com/UDHuL6VbedW4Im_tTsC4mU47Lnm2a4pYvc8awqfZSyQ/rs:fit:355:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5W/WUhNV1BnejNFOTh1/cWtDUjdJZjlRQUFB/QSZwaWQ9QXBp"
                     alt="camera"
                     className="img-fluide "
-                    style={{ width: "110px" ,height:"110px"}}
+                    style={{ width: "110px", height: "110px" }}
                   />{" "}
                 </div>
               </div>
               <div className="d-flex gap align-items-center">
                 <div>
-                <h6><Link to={'/product'} > women's cargo</Link></h6>
+                  <h6>
+                    <Link to={"/product"}> women's cargo</Link>
+                  </h6>
 
                   <p>10 Items</p>
                 </div>
@@ -270,13 +281,15 @@ const Home = () => {
                     src="https://imgs.search.brave.com/JNLwKAvSUJOHrLpS4Z4_6BL0eNISCmX95k4AlveZ_yw/rs:fit:316:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5z/VzFKZU5fN0NUZ0pE/SG1VT0hpVmZBSGFM/SCZwaWQ9QXBp"
                     alt="camera"
                     className="img-fluide "
-                    style={{ width: "110px" ,height:"110px"}}
+                    style={{ width: "110px", height: "110px" }}
                   />{" "}
                 </div>
               </div>
               <div className="d-flex gap align-items-center">
                 <div>
-                <h6><Link to={'/product'} > Man's cargo</Link></h6>
+                  <h6>
+                    <Link to={"/product"}> Man's cargo</Link>
+                  </h6>
 
                   <p>10 Items</p>
                 </div>
@@ -285,13 +298,15 @@ const Home = () => {
                     src="https://imgs.search.brave.com/d4aYL1EJS8wkPxZWIe39ezOvAMjKlzqeBEJ9MG_Lmfw/rs:fit:355:225:1/g:ce/aHR0cHM6Ly90c2Ux/LmV4cGxpY2l0LmJp/bmcubmV0L3RoP2lk/PU9JUC5HSTVFRk9q/M0wzWWxSbGthRVhE/X1dBQUFBQSZwaWQ9/QXBp"
                     alt="camera"
                     className="img-fluide "
-                    style={{ width: "110px" ,height:"110px"}}
+                    style={{ width: "110px", height: "110px" }}
                   />{" "}
                 </div>
               </div>
               <div className="d-flex gap align-items-center">
                 <div>
-                <h6><Link to={'/product'} > Man's jeans</Link></h6>
+                  <h6>
+                    <Link to={"/product"}> Man's jeans</Link>
+                  </h6>
 
                   <p>10 Items</p>
                 </div>
@@ -300,7 +315,7 @@ const Home = () => {
                     src="https://imgs.search.brave.com/UPP8FeFSlTTb43P8PEgRqlnTmr0OCIIBaKkMcpD1Hx0/rs:fit:483:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/M2U5LTF4aF9tUWZ4/ejN2WTZyLWF3QUFB/QSZwaWQ9QXBp"
                     alt="camera"
                     className="img-fluide "
-                    style={{ width: "110px" ,height:"110px"}}
+                    style={{ width: "110px", height: "110px" }}
                   />{" "}
                 </div>
               </div>
@@ -315,57 +330,69 @@ const Home = () => {
           </div>
           {product &&
             product?.map((item, index) => {
+              console.log(index, "index");
               if (item?.tags === "featured") {
-                return (
-                  <div className="col-3" key={index}>
-                    <div className="product-card position-relative">
-                      <div className="wishlist-icon position-absolute">
-                        <button
-                          className="border-0 bg-transparent"
-                          onClick={(e) => addToWish(item?._id)}
-                        >
-                          <img src={wish} alt="wishlist" />
-                        </button>
-                      </div>
-                      <div className="product-image">
-                        <img
-                          src={item?.images[1]?.url}
-                          className="img-fluid"
-                          alt="product"
-                        />
-                        <img
-                          src={item?.images[0]?.url}
-                          className="img-fluid"
-                          alt="product "
-                        />
-                      </div>
+                if (index > 2) {
+                  return (
+                    <div className="col-3" key={index}>
+                      <div className="product-card position-relative">
+                        <div className="wishlist-icon position-absolute">
+                          <button
+                            className="border-0 bg-transparent"
+                            onClick={(e) => addToWish(item?._id)}
+                          >
+                            <img src={wish} alt="wishlist" />
+                          </button>
+                        </div>
+                        <div className="product-image">
+                          <img
+                            src={item?.images[1]?.url}
+                            className="img-fluid"
+                            alt="product"
+                          />
+                          <img
+                            src={item?.images[0]?.url}
+                            className="img-fluid"
+                            alt="product "
+                          />
+                        </div>
 
-                      <div className="product-details">
-                        <h6 className="brand"> {item?.brand}</h6>
-                        <h5 className="product-title">{item?.title}</h5>
+                        <div className="product-details">
+                          <h6 className="brand"> {item?.brand}</h6>
+                          <h5 className="product-title">{item?.title}</h5>
 
-                        <p className="price">{item?.price}</p>
-                      </div>
-                      <div className="action-bar position-absolute">
-                        <div className="d-flex flex-column gap-15">
-                          <button className="border-0 bg-transparent">
-                            <img src={prodcompare} alt="compare" />
-                          </button>
-                          <button className="border-0 bg-transparent">
-                            <img
-                              onClick={() => navigate("/product/" + item?._id)}
-                              src={view}
-                              alt="view"
-                            />
-                          </button>
-                          <button className="border-0 bg-transparent">
-                            <img src={addcart} alt="addcart" />
-                          </button>
+                          <p className="price">{item?.price}</p>
+                        </div>
+                        <div className="action-bar position-absolute">
+                          <div className="d-flex flex-column gap-15">
+                            <button className="border-0 bg-transparent">
+                              <img
+                                src={prodcompare}
+                                alt="compare"
+                                onClick={() => {
+                                  dispatch(addToCompare(item));
+                                  toast.success("Product added to compare");
+                                }}
+                              />
+                            </button>
+                            <button className="border-0 bg-transparent">
+                              <img
+                                onClick={() =>
+                                  navigate("/product/" + item?._id)
+                                }
+                                src={view}
+                                alt="view"
+                              />
+                            </button>
+                            <button className="border-0 bg-transparent">
+                              <img src={addcart} alt="addcart" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
+                  );
+                }
               }
             })}
         </div>
@@ -411,9 +438,7 @@ const Home = () => {
               <div className="famous-content position-absolute">
                 <h5 className="text-light">Women's</h5>
                 <h6 className="text-light">ethnic and fusionwear.</h6>
-                <p className="text-light">
-                  Starting at ₹1000
-                </p>
+                <p className="text-light">Starting at ₹1000</p>
               </div>
             </div>
           </div>
@@ -427,9 +452,7 @@ const Home = () => {
               <div className="famous-content position-absolute">
                 <h5 className="text-dark">Men's</h5>
                 <h6 className="text-light">casual shirts.</h6>
-                <p className="text-dark">
-                  Starting at ₹500
-                </p>
+                <p className="text-dark">Starting at ₹500</p>
               </div>
             </div>
           </div>

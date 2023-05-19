@@ -75,6 +75,7 @@ const Addproduct = () => {
     formik.values.color = color ? color : " ";
     formik.values.images = img;
   }, [color, img]);
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -90,6 +91,7 @@ const Addproduct = () => {
     validationSchema: schema,
     onSubmit: (values) => {
       dispatch(createProducts(values));
+        console.log(values,"values that we have to send");
       formik.resetForm();
       setColor(null);
       setTimeout(() => {
@@ -241,6 +243,7 @@ const Addproduct = () => {
             </Dropzone>
           </div>
           <div className="showimages d-flex flex-wrap gap-3">
+         
             {imgState?.map((i, j) => {
               return (
                 <div className=" position-relative" key={j}>
@@ -254,6 +257,7 @@ const Addproduct = () => {
                 </div>
               );
             })}
+
           </div>
           <button
             className="btn btn-success border-0 rounded-3 my-5"

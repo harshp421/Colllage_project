@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
 import prodcompare from "../images/prodcompare.svg";
@@ -8,7 +8,7 @@ import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
 import { useDispatch } from "react-redux";
 import { addToWishList } from "../features/products/productSlice";
-
+import { toast } from "react-toastify";
 
 const ProductCard = (props) => {
   const { grid, data } = props;
@@ -17,8 +17,8 @@ const ProductCard = (props) => {
 
   const dispatch = useDispatch();
   const addToWish = (id) => {
-     alert("product added")
     dispatch(addToWishList(id));
+    toast.success("Product Added successfully");
   };
 
   return (
@@ -86,7 +86,10 @@ const ProductCard = (props) => {
                     <button className="border-0 bg-transparent">
                       <img src={prodcompare} alt="compare" />
                     </button>
-                    <Link to={`/product/${item._id}`} className="border-0 bg-transparent">
+                    <Link
+                      to={`/product/${item._id}`}
+                      className="border-0 bg-transparent"
+                    >
                       <img src={view} alt="view" />
                     </Link>
                     <button className="border-0 bg-transparent">

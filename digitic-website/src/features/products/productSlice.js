@@ -35,7 +35,6 @@ export const addToWishList = createAsyncThunk(
   }
 );
 
-
 export const addRating = createAsyncThunk(
   "product/rating",
   async (data, thunkAPI) => {
@@ -52,12 +51,24 @@ const productState = {
   isSuccess: false,
   isLoading: false,
   message: "",
+  compareProduct: [],
 };
 
 export const productSlice = createSlice({
   name: "product",
   initialState: productState,
-  reducers: [],
+  reducers: {
+    addToCompare(state, action) {
+      state.compareProduct.push(action.payload);
+    },
+    removeFromCompare(state, action) {
+      const filterProduct = [...state.compareProduct];
+      const updatedProduct = filterProduct.filter((element) => {
+        return element._id !== action.payload._id;
+      });
+      state.compareProduct = updatedProduct;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllProducts.pending, (state) => {
@@ -93,6 +104,9 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
+        if (state.isSuccess === false) {
+          toast.success("something went wrong");
+        }
       })
       .addCase(getAProduct.pending, (state) => {
         state.isLoading = true;
@@ -119,9 +133,8 @@ export const productSlice = createSlice({
         state.isSuccess = true;
         state.rating = action.payload;
         state.message = "rating added Successfully";
-        if(state.isSuccess === true)
-        {
-          toast.success("Review Added  Successfully")
+        if (state.isSuccess === true) {
+          toast.success("Review Added  Successfully");
         }
       })
       .addCase(addRating.rejected, (state, action) => {
@@ -134,3 +147,4 @@ export const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
+export const { addToCompare, removeFromCompare } = productSlice.actions;

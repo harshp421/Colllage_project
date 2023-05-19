@@ -1,6 +1,7 @@
 import axios from "axios";
 import { config } from "../../utils/axiosconfig";
 import { base_url } from "../../utils/baseUrl";
+
 const login = async (user) => {
   const response = await axios.post(`${base_url}user/admin-login`, user);
   if (response.data) {
@@ -14,26 +15,22 @@ const getOrders = async (data) => {
   return response.data;
 };
 const getOrder = async (id) => {
-  const response = await axios.get(
-    `${base_url}user/getaOrder/${id}`,
-    config
-  );
+  const response = await axios.get(`${base_url}user/getaOrder/${id}`, config);
 
   return response.data;
 };
-
 
 const updateOrder = async (data) => {
   const response = await axios.put(
-    `${base_url}user/updateOrder/${data.id}`,data,
+    `${base_url}user/updateOrder/${data.id}`,
+    data,
     config
   );
 
   return response.data;
 };
 
-
-const getMonthlyOrders= async (data) => {
+const getMonthlyOrders = async (data) => {
   const response = await axios.get(
     `${base_url}user/getMonthWiseOrderIncome`,
     data
@@ -42,11 +39,8 @@ const getMonthlyOrders= async (data) => {
   return response.data;
 };
 
-const getYearlyStats= async (data) => {
-  const response = await axios.get(
-    `${base_url}user/getYearlyorders`,
-    data
-  );
+const getYearlyStats = async (data) => {
+  const response = await axios.get(`${base_url}user/getYearlyorders`, data);
 
   return response.data;
 };
@@ -56,7 +50,7 @@ const authService = {
   getOrder,
   getMonthlyOrders,
   getYearlyStats,
-  updateOrder
+  updateOrder,
 };
 
 export default authService;
